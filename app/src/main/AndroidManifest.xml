@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.u.juthamas.egoverment" >
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="EGoverment"
+        android:theme="@style/AppTheme" >
+        <!--MainActivity-->
+        <activity
+            android:name="com.u.juthamas.egoverment.MainActivity"
+            android:label="หน้าหลัก" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!--Extra_information-->
+        <activity
+            android:name="com.u.juthamas.egoverment.Extra_information"
+            android:label="เซ็นสำเนาถูกต้อง" >
+        </activity>
+
+        <!--Calendar-->
+        <activity
+            android:name="com.u.juthamas.egoverment.Calendar"
+            android:label="เลือกวันที่และเวลา" >
+        </activity>
+
+        <!--Check_transaction-->
+        <activity
+            android:name="com.u.juthamas.egoverment.Check_transaction"
+            android:label="ทำบัตรประชาชน" >
+        </activity>
+
+        <!--Confirmation-->
+        <activity
+            android:name="com.u.juthamas.egoverment.Confirmation"
+            android:label="ยืนยันบุคคล" >
+        </activity>
+
+        <!--Document-->
+        <activity
+            android:name="com.u.juthamas.egoverment.Document"
+            android:label="สำเนาทะเบียนบ้าน" >
+        </activity>
+
+        <!--Location-->
+        <activity
+            android:name="com.u.juthamas.egoverment.Location"
+            android:label="สถานที่" >
+        </activity>
+
+        <!--Near Map-->
+        <activity
+            android:name="com.u.juthamas.egoverment.Near_map"
+            android:label="สถานที่" >
+        </activity>
+
+        <!--Review page-->
+        <activity
+            android:name="com.u.juthamas.egoverment.Review_page"
+            android:label="" >
+        </activity>
+
+        <!--Route map-->
+        <activity
+            android:name="com.u.juthamas.egoverment.Route_map"
+            android:label="สถานที่" >
+        </activity>
+
+        <!--Transaction-->
+        <activity
+            android:name="com.u.juthamas.egoverment.Transaction"
+            android:label="" >
+        </activity>
+
+        <!--Transaction detail-->
+        <activity
+            android:name="com.u.juthamas.egoverment.Transaction_detail"
+            android:label="ทำบัตรประชาชน" >
+        </activity>
+    </application>
+
+</manifest>
