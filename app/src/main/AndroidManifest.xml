@@ -20,7 +20,7 @@
 
         <!--Extra_information-->
         <activity
-            android:name="com.u.juthamas.egoverment.Extra_information"
+            android:name=".ExtraInformation"
             android:label="เซ็นสำเนาถูกต้อง" >
         </activity>
 
@@ -32,7 +32,7 @@
 
         <!--Check_transaction-->
         <activity
-            android:name="com.u.juthamas.egoverment.Check_transaction"
+            android:name=".CheckTransaction"
             android:label="ทำบัตรประชาชน" >
         </activity>
 
@@ -56,19 +56,19 @@
 
         <!--Near Map-->
         <activity
-            android:name="com.u.juthamas.egoverment.Near_map"
+            android:name=".NearMap"
             android:label="สถานที่" >
         </activity>
 
         <!--Review page-->
         <activity
-            android:name="com.u.juthamas.egoverment.Review_page"
+            android:name=".ReviewPage"
             android:label="" >
         </activity>
 
         <!--Route map-->
         <activity
-            android:name="com.u.juthamas.egoverment.Route_map"
+            android:name=".RouteMap"
             android:label="สถานที่" >
         </activity>
 
@@ -80,7 +80,7 @@
 
         <!--Transaction detail-->
         <activity
-            android:name="com.u.juthamas.egoverment.Transaction_detail"
+            android:name=".TransactionDetail"
             android:label="ทำบัตรประชาชน" >
         </activity>
     </application>

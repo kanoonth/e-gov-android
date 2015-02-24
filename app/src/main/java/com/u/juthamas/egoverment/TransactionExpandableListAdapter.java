@@ -3,7 +3,6 @@ package com.u.juthamas.egoverment;
 
 import android.app.Activity;
 import android.util.Log;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,37 +11,40 @@ import android.widget.CheckedTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Transaction_expandableListAdapter extends BaseExpandableListAdapter{
+import java.util.ArrayList;
 
-    private SparseArray<Transaction_group> groups;
-    private SparseArray<Transaction_group> temp;
+public class TransactionExpandableListAdapter extends BaseExpandableListAdapter{
+
+    private ArrayList<TransactionGroup> groups;
+    private ArrayList<TransactionGroup> temp;
     private LayoutInflater inflater;
     private Activity activity;
 
-    public Transaction_expandableListAdapter(Activity act, SparseArray<Transaction_group> groups){
+    public TransactionExpandableListAdapter(Activity act, ArrayList<TransactionGroup> groups){
         activity = act;
         this.groups = groups;
-        temp = new SparseArray<Transaction_group>();
+        temp = new ArrayList<TransactionGroup>();
+        temp.addAll(groups);
         inflater = act.getLayoutInflater();
     }
     @Override
     public int getGroupCount() {
-        return groups.size();
+        return temp.size();
     }
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return groups.get(groupPosition).children.size();
+        return temp.get(groupPosition).children.size();
     }
 
     @Override
     public Object getGroup(int groupPosition) {
-        return groups.get(groupPosition);
+        return temp.get(groupPosition);
     }
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return groups.get(groupPosition).children.get(childPosition);
+        return temp.get(groupPosition).children.get(childPosition);
     }
 
     @Override
@@ -75,7 +77,7 @@ public class Transaction_expandableListAdapter extends BaseExpandableListAdapter
         if(convertView == null){
             convertView = inflater.inflate(R.layout.listrow_group_transaction, null);
         }
-        Transaction_group group = (Transaction_group) getGroup(groupPosition);
+        TransactionGroup group = (TransactionGroup) getGroup(groupPosition);
         ((CheckedTextView) convertView).setText(group.string);
         ((CheckedTextView) convertView).setChecked(isExpanded);
         return convertView;
@@ -105,25 +107,24 @@ public class Transaction_expandableListAdapter extends BaseExpandableListAdapter
     }
 
     public void filterData(String query){
-        query = query.toLowerCase();
-        Log.v("Adapter",String.valueOf(temp.size()));
+        Log.v("temp size",String.valueOf(temp.size()));
+        Log.v("group size",String.valueOf(groups.size()));
         temp.clear();
-        Log.v("Query", query);
 
         if(query.isEmpty()){
-            temp = groups;
+            temp.addAll(groups);
         }
         else{
-            int count = 0;
-            for(int i = 0; i < getGroupCount(); i++){
-                Transaction_group group = (Transaction_group) getGroup(i);
-                String g = group.string.toLowerCase();
-                if(g.toString().contains(query)){
-                    temp.append(count,(Transaction_group)getGroup(i));
-                    count++;
+            for(int i = 0; i < groups.size(); i++){
+                TransactionGroup group = (TransactionGroup)groups.get(i);
+                String name = group.string.toLowerCase();
+                query = query.toLowerCase();
+                if(name.contains(query)){
+                   temp.add(group);
                 }
             }
         }
+        Log.v("Query", query);
         notifyDataSetChanged();
     }
 }

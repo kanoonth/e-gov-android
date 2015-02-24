@@ -5,17 +5,18 @@ import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.SparseArray;
 import android.widget.ExpandableListView;
 import android.widget.SearchView;
+
+import java.util.ArrayList;
 
 public class Transaction extends Activity implements
         SearchView.OnQueryTextListener, SearchView.OnCloseListener{
 
-    private SparseArray<Transaction_group> groups = new SparseArray<Transaction_group>();
+    private ArrayList<TransactionGroup> groups = new ArrayList<TransactionGroup>();
     private SearchView search;
     private ExpandableListView lsView;
-    private Transaction_expandableListAdapter adapter;
+    private TransactionExpandableListAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,18 +55,18 @@ public class Transaction extends Activity implements
         createData();
 
         lsView = (ExpandableListView)findViewById(R.id.lsTransaction);
-        adapter = new Transaction_expandableListAdapter(this, groups);
+        adapter = new TransactionExpandableListAdapter(this, groups);
         lsView.setAdapter(adapter);
 
     }
 
     public void createData(){
         for (int j = 0; j < 5; j++) {
-            Transaction_group group = new Transaction_group("Test " + j);
+            TransactionGroup group = new TransactionGroup("Test " + j);
             for (int i = 0; i < 5; i++) {
                 group.children.add("Sub Item" + i);
             }
-            groups.append(j, group);
+            groups.add(group);
         }
     }
 
