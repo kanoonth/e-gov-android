@@ -22,11 +22,6 @@ public class Transaction extends Activity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction);
 
-//        createData();
-//        lsView = (ExpandableListView)findViewById(R.id.lsTransaction);
-//        adapter = new Transaction_expandableListAdapter(this, groups);
-//        lsView.setAdapter(adapter);
-
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         search = (SearchView) findViewById(R.id.search);
         search.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
