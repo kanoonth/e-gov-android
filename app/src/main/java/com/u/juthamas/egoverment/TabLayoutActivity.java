@@ -23,13 +23,13 @@ public class TabLayoutActivity extends TabActivity {
 
         Intent intent;
         intent = new Intent(this, LocationActivity.class);
-        spec = tabhost.newTabSpec("fucku").setIndicator("kuyyyyy").setContent(intent);
+        spec = tabhost.newTabSpec("location").setIndicator("สถานที่").setContent(intent);
         tab1.setContent(new Intent(this,LocationActivity.class));
 
         tabhost.addTab(spec);
 
         intent = new Intent(this, NearMapActivity.class);
-        spec = tabhost.newTabSpec("fucku").setIndicator("kuyyyyy").setContent(intent);
+        spec = tabhost.newTabSpec("nearMap").setIndicator("Google Map").setContent(intent);
         tab2.setContent(new Intent(this,NearMapActivity.class));
         tabhost.addTab(spec);
     }

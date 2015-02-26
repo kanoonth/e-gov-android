@@ -75,7 +75,8 @@
         <!--Location-->
         <activity
             android:name=".LocationActivity"
-            android:label="สถานที่" >
+            android:label="สถานที่"
+            android:windowSoftInputMode="stateHidden">
         </activity>
 
         <!--Near Map-->
@@ -110,7 +111,7 @@
 
         <activity
             android:name=".TabLayoutActivity"
-            android:label="ควย " >
+            android:label="สถานที่ " >
         </activity>
     </application>
 
