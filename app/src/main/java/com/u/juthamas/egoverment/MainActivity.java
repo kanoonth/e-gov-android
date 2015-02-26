@@ -39,6 +39,8 @@ public class MainActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String selected = (String) ((TextView) view).getText();
                 Toast.makeText(getApplicationContext(), "You selected : " + selected, Toast.LENGTH_SHORT).show();
+                Intent newActivity = new Intent(MainActivity.this, CheckTransactionActivity.class);
+                startActivity(newActivity);
             }
         });
         lsHis.setLayoutParams(new RelativeLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,height*70/100));
@@ -47,7 +49,7 @@ public class MainActivity extends Activity {
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent newActivity = new Intent(MainActivity.this, Transaction.class);
+                Intent newActivity = new Intent(MainActivity.this, TransactionActivity.class);
                 startActivity(newActivity);
             }
         });

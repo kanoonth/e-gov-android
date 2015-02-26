@@ -1,7 +1,5 @@
 package com.u.juthamas.egoverment;
 
-
-import android.app.Activity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,14 +16,14 @@ public class TransactionExpandableListAdapter extends BaseExpandableListAdapter{
     private ArrayList<TransactionGroup> groups;
     private ArrayList<TransactionGroup> temp;
     private LayoutInflater inflater;
-    private Activity activity;
+    private TransactionActivity transaction;
 
-    public TransactionExpandableListAdapter(Activity act, ArrayList<TransactionGroup> groups){
-        activity = act;
+    public TransactionExpandableListAdapter(ArrayList<TransactionGroup> groups,TransactionActivity t){
         this.groups = groups;
         temp = new ArrayList<TransactionGroup>();
         temp.addAll(groups);
-        inflater = act.getLayoutInflater();
+        inflater = t.getLayoutInflater();
+        transaction = t;
     }
     @Override
     public int getGroupCount() {
@@ -95,7 +93,8 @@ public class TransactionExpandableListAdapter extends BaseExpandableListAdapter{
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(activity,children,Toast.LENGTH_SHORT).show();
+                Toast.makeText(transaction.getApplicationContext(),children,Toast.LENGTH_SHORT).show();
+                transaction.nextPage();
             }
         });
         return convertView;

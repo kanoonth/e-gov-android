@@ -4,7 +4,7 @@ package com.u.juthamas.egoverment;
 import android.app.Activity;
 import android.os.Bundle;
 
-public class ExtraInformation extends Activity{
+public class ExtraInformationActivity extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

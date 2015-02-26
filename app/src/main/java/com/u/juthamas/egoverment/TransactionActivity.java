@@ -4,13 +4,14 @@ package com.u.juthamas.egoverment;
 import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ExpandableListView;
 import android.widget.SearchView;
 
 import java.util.ArrayList;
 
-public class Transaction extends Activity implements
+public class TransactionActivity extends Activity implements
         SearchView.OnQueryTextListener, SearchView.OnCloseListener{
 
     private ArrayList<TransactionGroup> groups = new ArrayList<TransactionGroup>();
@@ -50,7 +51,7 @@ public class Transaction extends Activity implements
         createData();
 
         lsView = (ExpandableListView)findViewById(R.id.lsTransaction);
-        adapter = new TransactionExpandableListAdapter(this, groups);
+        adapter = new TransactionExpandableListAdapter(groups,this);
         lsView.setAdapter(adapter);
 
     }
@@ -84,5 +85,10 @@ public class Transaction extends Activity implements
         adapter.filterData(query);
 //        expandAll();
         return false;
+    }
+
+    public void nextPage(){
+        Intent newActivity = new Intent(TransactionActivity.this, TransactionDetailActivity.class);
+        startActivity(newActivity);
     }
 }

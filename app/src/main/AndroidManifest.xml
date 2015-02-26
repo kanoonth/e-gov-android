@@ -2,11 +2,35 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.u.juthamas.egoverment" >
 
+    <!--!!!!!have to add-->
+    <permission
+        android:name="com.u.juthamas.egoverment.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature"/>
+    <uses-permission android:name="com.u.juthamas.egoverment.permission.MAPS_RECEIVE"/>
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
+    <!-- The following two permissions are not required to use
+         Google Maps Android API v2, but are recommended. -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true"/>
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:label="EGoverment"
+        android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyC5WWLvMZqN2nri85zuTq5-fTPCBHu2n_E"/>
+
         <!--MainActivity-->
         <activity
             android:name="com.u.juthamas.egoverment.MainActivity"
@@ -20,68 +44,73 @@
 
         <!--Extra_information-->
         <activity
-            android:name=".ExtraInformation"
+            android:name=".ExtraInformationActivity"
             android:label="เซ็นสำเนาถูกต้อง" >
         </activity>
 
-        <!--Calendar-->
+        <!--CalendarActivity-->
         <activity
-            android:name="com.u.juthamas.egoverment.Calendar"
+            android:name="com.u.juthamas.egoverment.CalendarActivity"
             android:label="เลือกวันที่และเวลา" >
         </activity>
 
         <!--Check_transaction-->
         <activity
-            android:name=".CheckTransaction"
+            android:name=".CheckTransactionActivity"
             android:label="ทำบัตรประชาชน" >
         </activity>
 
         <!--Confirmation-->
         <activity
-            android:name="com.u.juthamas.egoverment.Confirmation"
+            android:name=".ConfirmationActivity"
             android:label="ยืนยันบุคคล" >
         </activity>
 
         <!--Document-->
         <activity
-            android:name="com.u.juthamas.egoverment.Document"
+            android:name=".DocumentActivity"
             android:label="สำเนาทะเบียนบ้าน" >
         </activity>
 
         <!--Location-->
         <activity
-            android:name="com.u.juthamas.egoverment.Location"
+            android:name=".LocationActivity"
             android:label="สถานที่" >
         </activity>
 
         <!--Near Map-->
         <activity
-            android:name=".NearMap"
+            android:name=".NearMapActivity"
             android:label="สถานที่" >
         </activity>
 
         <!--Review page-->
         <activity
-            android:name=".ReviewPage"
+            android:name=".ReviewPageActivity"
             android:label="" >
         </activity>
 
         <!--Route map-->
         <activity
-            android:name=".RouteMap"
+            android:name=".RouteMapActivity"
             android:label="สถานที่" >
         </activity>
 
         <!--Transaction-->
         <activity
-            android:name="com.u.juthamas.egoverment.Transaction"
+            android:name=".TransactionActivity"
             android:label="" >
         </activity>
 
         <!--Transaction detail-->
         <activity
-            android:name=".TransactionDetail"
+            android:name=".TransactionDetailActivity"
             android:label="ทำบัตรประชาชน" >
+        </activity>
+
+        <activity
+            android:name=".TabLayoutActivity"
+            android:label="ควย " >
         </activity>
     </application>
 
