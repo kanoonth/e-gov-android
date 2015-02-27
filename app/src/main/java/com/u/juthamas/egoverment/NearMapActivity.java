@@ -3,6 +3,7 @@ package com.u.juthamas.egoverment;
 
 import android.app.Activity;
 import android.content.Context;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -11,19 +12,22 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 
 public class NearMapActivity extends Activity {
-    GoogleMap googleMap;
+    GoogleMap mMap;
     Marker marker;
-    private double lat, lng;
+    private double latitude, longitude;
     private Spinner distanceSpinner;
     private Spinner lineSpinner;
     private LatLng curPos;
@@ -35,8 +39,11 @@ public class NearMapActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_near_maps);
         createMapView();
-        addMarker();
-    }
+        setUpMap();
+        addMarker(new LatLng(13.851095, 100.567791),("Kaset"),("สาธิตเกษตร"));
+        addMarker(new LatLng(13.640073, 100.555517),("Wat samean"),("วัดเสมียนนารี"));
+        zoom(new LatLng(13.640073, 100.555517),new LatLng(latitude,longitude));
+      }
 
     private void createMapView() {
         /**
@@ -44,15 +51,15 @@ public class NearMapActivity extends Activity {
          * may be thrown when initialising the map
          */
         try {
-            if (null == googleMap) {
-                googleMap = ((MapFragment) getFragmentManager().findFragmentById(
+            if (null == mMap) {
+                mMap = ((MapFragment) getFragmentManager().findFragmentById(
                         R.id.mapView)).getMap();
 
                 /**
                  * If the map is still null after attempted initialisation,
                  * show an error to the user
                  */
-                if (null == googleMap) {
+                if (null == mMap) {
                     Toast.makeText(getApplicationContext(),
                             "Error creating map", Toast.LENGTH_SHORT).show();
                 }
@@ -65,66 +72,128 @@ public class NearMapActivity extends Activity {
     /**
      * Adds a marker to the map
      */
-    private void addMarker() {
+//    private void addMarker() {
+//
+//        /** Make sure that the map has been initialised **/
+//        if (null != mMap) {
+//            mMap.addMarker(new MarkerOptions()
+//                            .position(new LatLng(lat, lng))
+//                            .title("Marker")
+//                            .draggable(true)
+//            );
+//        }
+//    }
 
-        /** Make sure that the map has been initialised **/
-        if (null != googleMap) {
-            googleMap.addMarker(new MarkerOptions()
-                            .position(new LatLng(lat, lng))
-                            .title("Marker")
-                            .draggable(true)
-            );
-        }
-    }
+//    LocationListener listener = new LocationListener() {
+//        @Override
+//        public void onLocationChanged(Location loc) {
+//            curPos = new LatLng(loc.getLatitude(), loc.getLongitude());
+//            latitude = loc.getLatitude();
+//            longitude = loc.getLongitude();
+//
+//            if (marker != null) {
+//                marker.setPosition(new LatLng(latitude, longitude));
+//                circle.setCenter(new LatLng(latitude, longitude));
+//                circle.setRadius(Double.parseDouble(distanceSpinner.getSelectedItem().toString()));
+//            } else {
+//                marker = mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)));
+//                marker.setAnchor(0.5f, 0.5f);
+////                marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.currentlocation));
+//                circle = mMap.addCircle(new CircleOptions()
+//                                .center(new LatLng(latitude, longitude))
+//                                .radius(Double.parseDouble(distanceSpinner.getSelectedItem().toString()))
+//                                .strokeColor(0x996C9FF0)
+//                                .fillColor(0x80CCD8EB)
+//                                .strokeWidth(5)
+//                                .visible(false)
+//
+//                );
+////                moveToCurrent();
+//            }
+//
+//        }
+//
+//    };
 
-    LocationListener listener = new LocationListener() {
-        @Override
-        public void onLocationChanged(Location loc) {
-            curPos = new LatLng(loc.getLatitude(), loc.getLongitude());
-            lat = loc.getLatitude();
-            lng = loc.getLongitude();
-
-            if (marker != null) {
-                marker.setPosition(new LatLng(lat, lng));
-                circle.setCenter(new LatLng(lat, lng));
-                circle.setRadius(Double.parseDouble(distanceSpinner.getSelectedItem().toString()));
-            } else {
-                marker = googleMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)));
-                marker.setAnchor(0.5f, 0.5f);
-//                marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.currentlocation));
-                circle = googleMap.addCircle(new CircleOptions()
-                                .center(new LatLng(lat, lng))
-                                .radius(Double.parseDouble(distanceSpinner.getSelectedItem().toString()))
-                                .strokeColor(0x996C9FF0)
-                                .fillColor(0x80CCD8EB)
-                                .strokeWidth(5)
-                                .visible(false)
-
-                );
-//                moveToCurrent();
-            }
-
-        }
-
-    };
+//    private void setUpMap() {
+//        lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+//
+//        boolean isNetwork =
+//                lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+//        boolean isGPS =
+//                lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+//
+//        if (isNetwork) {
+//            lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 10, (android.location.LocationListener) listener);
+//            Location loc = lm.getLastKnownLocation(
+//                    LocationManager.NETWORK_PROVIDER);
+//            if (loc != null) {
+//                lat = loc.getLatitude();
+//                lng = loc.getLongitude();
+//            }
+//        }
+//    }
 
     private void setUpMap() {
-        lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+//        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker").snippet("Snippet"));
 
-        boolean isNetwork =
-                lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-        boolean isGPS =
-                lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        // Enable MyLocation Layer of Google Map
+        mMap.setMyLocationEnabled(true);
 
-        if (isNetwork) {
-            lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 10, (android.location.LocationListener) listener);
-            Location loc = lm.getLastKnownLocation(
-                    LocationManager.NETWORK_PROVIDER);
-            if (loc != null) {
-                lat = loc.getLatitude();
-                lng = loc.getLongitude();
-            }
-        }
+        // Get LocationManager object from System Service LOCATION_SERVICE
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        // Create a criteria object to retrieve provider
+        Criteria criteria = new Criteria();
+
+        // Get the name of the best provider
+        String provider = locationManager.getBestProvider(criteria, true);
+
+        // Get Current Location
+        Location myLocation = locationManager.getLastKnownLocation(provider);
+
+        // set map type
+        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+        // Get latitude of the current location
+        latitude = myLocation.getLatitude();
+
+        // Get longitude of the current location
+        longitude = myLocation.getLongitude();
+
+        // Create a LatLng object for the current location
+        LatLng latLng = new LatLng(latitude, longitude);
+
+        // Show the current location in Google Map
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+
+        // Zoom in the Google Map
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title("You are here!").snippet("Consider yourself located").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+    }
+
+    private void addMarker(LatLng latLng,String nameOfPlace,String detail){
+        Marker markerPlace = mMap.addMarker(new MarkerOptions().position(latLng).title(nameOfPlace).snippet(detail));
+
+    }
+
+    private void zoom(LatLng userLocation, LatLng targetLocation){
+//        LatLngBounds(LatLng southwest, LatLng northeast)
+
+        LatLngBounds latBound = new LatLngBounds(userLocation,targetLocation);
+//        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(latBound, 1));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latBound.getCenter(), 12));
+        LatLng latLng = new LatLng(latitude, longitude);
+
+        // Show the current location in Google Map
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+
+        Log.d("www","!Current"+latitude+" , "+longitude);
+        Log.d("sss","!!!!!!!!Message"+latBound+"");
+// Set the camera to the greatest possible zoom level that includes the
+
+
+
     }
 }
 
