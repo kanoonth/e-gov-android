@@ -3,16 +3,13 @@ package com.u.juthamas.egoverment;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,10 +20,6 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Display display = getWindowManager().getDefaultDisplay();
-        int width = display.getWidth();
-        int height = display.getHeight();
 
         String[] history = new String[] {"ทำบัตรประชาชน", "แจ้งเกิด"};
         final ListView lsHis = (ListView)findViewById(R.id.listHistory);
@@ -43,7 +36,6 @@ public class MainActivity extends Activity {
                 startActivity(newActivity);
             }
         });
-        lsHis.setLayoutParams(new RelativeLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,height*70/100));
 
         final Button startBtn = (Button) findViewById(R.id.startBtn);
         startBtn.setOnClickListener(new View.OnClickListener() {
