@@ -9,15 +9,15 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:iconifiedByDefault="false"/>
+        android:iconifiedByDefault="false"
+        android:layout_marginBottom="10dp"/>
 
     <ListView
         android:id="@+id/lsLocation"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_weight="1">
+        android:layout_centerVertical="true">
     </ListView>
 
 </LinearLayout>
