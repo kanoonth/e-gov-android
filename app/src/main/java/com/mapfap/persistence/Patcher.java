@@ -54,6 +54,8 @@ public class Patcher {
      * @return current version after patched.
      */
     public Long patch() {
+
+//        List<Transaction> transactions = HttpRequestTask.getTransaction(789);
         Long lastTransactionCode = getLastTransactionCode();
         String request = lastTransactionCode + ";";
 //        String response = "100;INSERT INTO BLAHBLAH;";
