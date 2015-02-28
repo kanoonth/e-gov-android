@@ -62,8 +62,8 @@ public class Patcher {
         List<Transaction> transactions = new ArrayList<Transaction>();
 
         Transaction t1 = new Transaction();
-//        t1.code = randomID() + "";
-        t1.code = (getLastTransactionCode() + 1) + "";
+        t1.code = randomID() + "";
+//        t1.code = (getLastTransactionCode() + 1) + "";
         t1.type = "S";
         t1.content = "INSERT INTO mTransaction(code, type, content) VALUES('"+ randomID() +"','S','OK');";
         transactions.add(t1);
