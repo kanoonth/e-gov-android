@@ -13,6 +13,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mapfap.persistence.Copy;
+import com.mapfap.persistence.Patcher;
+
 
 public class MainActivity extends Activity {
 
@@ -20,6 +23,10 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Patcher patcher = new Patcher(getBaseContext());
+        patcher.patch();
+        Copy.exec();
 
         String[] history = new String[] {"ทำบัตรประชาชน", "แจ้งเกิด"};
         final ListView lsHis = (ListView)findViewById(R.id.listHistory);
