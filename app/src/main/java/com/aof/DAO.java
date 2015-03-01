@@ -1,13 +1,14 @@
 package com.aof;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
 import com.aof.models.Action;
 import com.aof.models.Category;
 import com.aof.models.Document;
 import com.aof.models.Ticket;
+import com.mapfap.persistence.SqliteConnector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,11 @@ import java.util.List;
  */
 public class DAO {
 
-    private SQLiteOpenHelper sqliteConnector;
+    private SqliteConnector sqliteConnector;
+
+    public DAO(Context context) {
+        sqliteConnector = new SqliteConnector(context);
+    }
 
     /**
      * Get the Reference code of last transaction stored in the database.
