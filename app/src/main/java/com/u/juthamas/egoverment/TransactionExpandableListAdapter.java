@@ -106,8 +106,6 @@ public class TransactionExpandableListAdapter extends BaseExpandableListAdapter{
     }
 
     public void filterData(String query){
-        Log.v("temp size",String.valueOf(temp.size()));
-        Log.v("group size",String.valueOf(groups.size()));
         temp.clear();
 
         if(query.isEmpty()){

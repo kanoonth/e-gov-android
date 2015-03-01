@@ -10,13 +10,13 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.aof.DAO;
 import com.mapfap.persistence.Copy;
 import com.mapfap.persistence.Patcher;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+//import com.aof.DAO;
 
 
 public class MainActivity extends Activity {
