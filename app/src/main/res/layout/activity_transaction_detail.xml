@@ -11,23 +11,27 @@
         android:layout_height="0dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_weight=".7">
+        android:layout_weight=".8">
     </ListView>
 
     <Button
         android:id="@+id/cPlaceBtn"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight=".15"
+        android:layout_weight=".1"
         android:text="เลือกสถานที่"
+        android:background="@drawable/button_custom"
+        android:textColor="@color/white"
         android:layout_below="@+id/lsDetail"/>
 
     <Button
         android:id="@+id/reserveBtn"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight=".15"
-        android:text="จอง"
+        android:layout_weight=".1"
+        android:text="เลือกวันและเวลา"
+        android:background="@drawable/button_custom"
+        android:textColor="@color/white"
         android:layout_below="@+id/cPlaceBtn"/>
 
 </LinearLayout>

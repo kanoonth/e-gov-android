@@ -16,7 +16,7 @@
         android:layout_height="0dp"
         android:layout_weight=".1"
         android:layout_below="@+id/listCheckTran"
-        android:background="@color/primary"
+        android:background="@drawable/button_custom"
         android:textColor="@color/white"
         android:text="สถานที่" />
 
