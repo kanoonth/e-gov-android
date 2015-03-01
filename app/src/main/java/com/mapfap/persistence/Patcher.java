@@ -73,12 +73,14 @@ public class Patcher {
         db.beginTransaction();
         try {
 
-            if (transaction.type == Transaction.TYPE_SQL) {
+            if (transaction.type.equals(Transaction.TYPE_SQL)) {
                 db.execSQL(transaction.content);
                 Log.d("Patcher", "Added " + transaction.content);
-            } else {
+            } else if (transaction.type.equals(Transaction.TYPE_FILE)) {
                 retrieveFile(transaction.content);
                 Log.d("Patcher", "Loaded " + transaction.content);
+            } else {
+                Log.e("Patcher", "Unknown transaction type #" + transaction.code + ": " + transaction.content);
             }
 
             ContentValues values = new ContentValues();
@@ -103,10 +105,16 @@ public class Patcher {
     }
 
     private boolean retrieveFile(String content) throws Exception {
-        throw new Exception("Couldn't retrieve file");
+        return true;
+//        throw new Exception("Couldn't retrieve file");
 //        return false;
     }
 
+    /**
+     * This is callback for HttpRequestTask.
+     * @param transactions data loaded.
+     * @return true if success; false otherwise.
+     */
     public boolean onRecieveData(List<Transaction> transactions) {
         Log.d("Patcher", "size = " + transactions.size());
 
