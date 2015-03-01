@@ -7,7 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
-import com.kanoon.egov.http.HttpRequestTask;
+import com.kanoon.egov.http.DownloadFileTask;
+import com.kanoon.egov.http.GetTransactionTask;
 
 import java.util.Calendar;
 import java.util.List;
@@ -55,7 +56,7 @@ public class Patcher {
      */
     public void patch() {
         Long lastTransactionCode = getLastTransactionCode();
-        HttpRequestTask task = new HttpRequestTask(this, lastTransactionCode);
+        GetTransactionTask task = new GetTransactionTask(this, lastTransactionCode);
         task.execute();
     }
 
@@ -104,18 +105,29 @@ public class Patcher {
         return true;
     }
 
-    private boolean retrieveFile(String content) throws Exception {
+    private boolean retrieveFile(String url) throws Exception {
+        // TODO: What is filename???
+        DownloadFileTask task = new DownloadFileTask(this, url, url);
+        task.execute();
         return true;
-//        throw new Exception("Couldn't retrieve file");
-//        return false;
     }
 
     /**
-     * This is callback for HttpRequestTask.
+     * This is callback from DownloadFileTask.
+     * @param isSuccess
+     * @return
+     */
+    public boolean onReceiveFile(boolean isSuccess) {
+        // TODO: How to handle if file missing???
+        return isSuccess;
+    }
+
+    /**
+     * This is callback for GetTransactionTask.
      * @param transactions data loaded.
      * @return true if success; false otherwise.
      */
-    public boolean onRecieveData(List<Transaction> transactions) {
+    public boolean onReceiveData(List<Transaction> transactions) {
         Log.d("Patcher", "size = " + transactions.size());
 
         for (Transaction t: transactions) {

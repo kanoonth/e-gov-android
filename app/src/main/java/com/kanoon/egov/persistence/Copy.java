@@ -17,7 +17,7 @@ public class Copy {
 
     public static void exec() {
         try {
-            copy(new File("/data/data/com.u.juthamas.egoverment/databases/patcher.db"), new File("/sdcard/Download/patcher.db"));
+            copy(new File("/data/data/com.kanoon.egov/databases/patcher.db"), new File("/sdcard/Download/patcher.db"));
         } catch (Exception ex) {
             Log.e("Copy", ex.getMessage());
         }

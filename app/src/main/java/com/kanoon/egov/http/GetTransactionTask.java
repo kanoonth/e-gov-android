@@ -14,12 +14,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class HttpRequestTask extends AsyncTask<Void, Void, List<Transaction>> {
+public class GetTransactionTask extends AsyncTask<Void, Void, List<Transaction>> {
 
     private final Patcher patcher;
     private final String url;
 
-    public HttpRequestTask(Patcher patcher, long code) {
+    public GetTransactionTask(Patcher patcher, long code) {
         super();
         this.patcher = patcher;
         this.url = "http://128.199.85.120/api/v1/transaction/" + code;
@@ -35,7 +35,7 @@ public class HttpRequestTask extends AsyncTask<Void, Void, List<Transaction>> {
             return new ArrayList<Transaction>(Arrays.asList(transactions));
 
         } catch (Exception e) {
-            Log.e("HttpRequestTask", e.getMessage(), e);
+            Log.e("GetTransactionTask", e.getMessage(), e);
         }
 
         return null;
@@ -44,7 +44,7 @@ public class HttpRequestTask extends AsyncTask<Void, Void, List<Transaction>> {
     @Override
     protected void onPostExecute(List<Transaction> transactions) {
         super.onPostExecute(transactions);
-        patcher.onRecieveData(transactions);
+        patcher.onReceiveData(transactions);
     }
 
 }
