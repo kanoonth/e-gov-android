@@ -34,7 +34,8 @@
         <!--MainActivity-->
         <activity
             android:name="com.u.juthamas.egoverment.MainActivity"
-            android:label="หน้าหลัก" >
+            android:label="หน้าหลัก"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -45,73 +46,85 @@
         <!--Extra_information-->
         <activity
             android:name=".ExtraInformationActivity"
-            android:label="เซ็นสำเนาถูกต้อง" >
+            android:label="เซ็นสำเนาถูกต้อง"
+            android:screenOrientation="portrait">
         </activity>
 
         <!--CalendarActivity-->
         <activity
             android:name="com.u.juthamas.egoverment.CalendarActivity"
-            android:label="เลือกวันที่และเวลา" >
+            android:label="เลือกวันที่และเวลา"
+            android:screenOrientation="portrait">
         </activity>
 
         <!--Check_transaction-->
         <activity
             android:name=".CheckTransactionActivity"
-            android:label="ทำบัตรประชาชน" >
+            android:label="ทำบัตรประชาชน"
+            android:screenOrientation="portrait">
         </activity>
 
         <!--Confirmation-->
         <activity
             android:name=".ConfirmationActivity"
-            android:label="ยืนยันบุคคล" >
+            android:label="ยืนยันบุคคล"
+            android:screenOrientation="portrait">
         </activity>
 
         <!--Document-->
         <activity
             android:name=".DocumentActivity"
-            android:label="สำเนาทะเบียนบ้าน" >
+            android:label="สำเนาทะเบียนบ้าน"
+            android:screenOrientation="portrait">
         </activity>
 
         <!--Location-->
         <activity
             android:name=".LocationActivity"
             android:label="สถานที่"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait">
         </activity>
 
         <!--Near Map-->
         <activity
             android:name=".NearMapActivity"
-            android:label="สถานที่" >
+            android:label="สถานที่"
+            android:screenOrientation="portrait">
         </activity>
 
         <!--Review page-->
         <activity
             android:name=".ReviewPageActivity"
-            android:label="" >
+            android:label=""
+            android:screenOrientation="portrait">
         </activity>
 
         <!--Route map-->
         <activity
             android:name=".RouteMapActivity"
-            android:label="สถานที่" >
+            android:label="สถานที่"
+            android:screenOrientation="portrait">
         </activity>
 
         <!--Transaction-->
         <activity
             android:name=".TransactionActivity"
-            android:label="" >
+            android:label=""
+            android:screenOrientation="portrait">
         </activity>
 
         <!--Transaction detail-->
         <activity
             android:name=".TransactionDetailActivity"
-            android:label="ทำบัตรประชาชน" >
+            android:label="ทำบัตรประชาชน"
+            android:screenOrientation="portrait">
         </activity>
 
         <activity
             android:name=".TabLayoutActivity"
-            android:label="สถานที่ " >
+            android:label="สถานที่ "
+            android:screenOrientation="portrait">
         </activity>
     </application>
 

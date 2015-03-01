@@ -7,18 +7,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mapfap.persistence.Copy;
 import com.mapfap.persistence.Patcher;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class MainActivity extends Activity {
-
+    private List<String> data;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,17 +28,17 @@ public class MainActivity extends Activity {
         patcher.patch();
         Copy.exec();
 
-        String[] history = new String[] {"ทำบัตรประชาชน", "แจ้งเกิด"};
+        data = new ArrayList<String>();
+        fillData();
+
         final ListView lsHis = (ListView)findViewById(R.id.listHistory);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, history);
+        ListAdapter adapter = new ListAdapter(this, data);
         lsHis.setAdapter(adapter);
         lsHis.setTextFilterEnabled(true);
 
         lsHis.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String selected = (String) ((TextView) view).getText();
-                Toast.makeText(getApplicationContext(), "You selected : " + selected, Toast.LENGTH_SHORT).show();
                 Intent newActivity = new Intent(MainActivity.this, CheckTransactionActivity.class);
                 startActivity(newActivity);
             }
@@ -74,5 +74,13 @@ public class MainActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public  void fillData() {
+        data.add("ทำบัตรประชาชน");
+        data.add("แจ้งเกิด");
+        for (int i = 1; i <= 4; i++) {
+            data.add("history " + i);
+        }
     }
 }

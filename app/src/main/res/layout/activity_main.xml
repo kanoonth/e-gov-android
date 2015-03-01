@@ -10,14 +10,18 @@
         android:id="@+id/listHistory"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight=".8"/>
+        android:layout_weight=".9"/>
 
     <Button
         android:id="@+id/startBtn"
         android:layout_width="match_parent"
+        android:maxWidth="100px"
         android:layout_height="0dp"
-        android:layout_weight=".2"
+        android:layout_weight=".1"
         android:text="เริ่ม"
+        android:textColor="@color/white"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:background="@drawable/button_custom"
         android:layout_below="@+id/listHistory"/>
 
 </LinearLayout>
