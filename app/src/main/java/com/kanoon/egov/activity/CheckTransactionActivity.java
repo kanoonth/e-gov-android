@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.u.juthamas.egoverment.R;
+import com.kanoon.egov.R;
 
 public class CheckTransactionActivity extends Activity{
     @Override

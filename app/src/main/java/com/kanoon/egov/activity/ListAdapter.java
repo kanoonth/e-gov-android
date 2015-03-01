@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.u.juthamas.egoverment.R;
+import com.kanoon.egov.R;
 
 import java.util.ArrayList;
 import java.util.List;

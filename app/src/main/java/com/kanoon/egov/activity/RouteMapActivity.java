@@ -11,7 +11,7 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.u.juthamas.egoverment.R;
+import com.kanoon.egov.R;
 
 public class RouteMapActivity extends Activity {
     GoogleMap mMap;

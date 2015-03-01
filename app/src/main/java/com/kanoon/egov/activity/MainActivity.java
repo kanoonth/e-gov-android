@@ -12,13 +12,10 @@ import android.widget.ListView;
 
 import com.kanoon.egov.persistence.Copy;
 import com.kanoon.egov.persistence.Patcher;
-import com.u.juthamas.egoverment.R;
+import com.kanoon.egov.R;
 
 import java.util.ArrayList;
 import java.util.List;
-
-//import com.kanoon.egov.persistence.DAO;
-
 
 public class MainActivity extends Activity {
     private List<String> data;

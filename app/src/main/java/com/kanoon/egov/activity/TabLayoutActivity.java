@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TabHost;
 
-import com.u.juthamas.egoverment.R;
+import com.kanoon.egov.R;
 
 /**
  * Created by Aof on 2/24/2015 AD.

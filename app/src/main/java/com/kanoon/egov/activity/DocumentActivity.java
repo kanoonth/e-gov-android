@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.u.juthamas.egoverment.R;
+import com.kanoon.egov.R;
 
 public class DocumentActivity extends Activity{
     @Override

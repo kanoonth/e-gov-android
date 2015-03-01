@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
-import com.u.juthamas.egoverment.R;
+import com.kanoon.egov.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import com.u.juthamas.egoverment.R;
+import com.kanoon.egov.R;
 
 public class CheckTransactionAdapter extends ArrayAdapter<String>{
     private String[] datas;

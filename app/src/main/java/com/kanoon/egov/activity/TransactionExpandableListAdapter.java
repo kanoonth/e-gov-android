@@ -9,7 +9,7 @@ import android.widget.CheckedTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.u.juthamas.egoverment.R;
+import com.kanoon.egov.R;
 
 import java.util.ArrayList;
 

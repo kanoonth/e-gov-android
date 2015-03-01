@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.*;
 
-import com.u.juthamas.egoverment.R;
+import com.kanoon.egov.R;
 
 import java.util.ArrayList;
 import java.util.List;

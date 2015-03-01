@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.u.juthamas.egoverment.R;
+import com.kanoon.egov.R;
 
 public class ConfirmationActivity extends Activity{
     @Override

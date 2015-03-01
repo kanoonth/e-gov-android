@@ -4,7 +4,7 @@ package com.kanoon.egov.activity;
 import android.app.Activity;
 import android.os.Bundle;
 
-import com.u.juthamas.egoverment.R;
+import com.kanoon.egov.R;
 
 public class ExtraInformationActivity extends Activity{
     @Override
