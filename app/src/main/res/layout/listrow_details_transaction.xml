@@ -1,27 +1,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="40dp"
-    android:clickable="true"
-    android:orientation="vertical"
-    android:paddingLeft="40dp"
-    tools:context=".MainActivity" >
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/textView1"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_launcher"
-        android:drawablePadding="5dp"
         android:gravity="center_vertical"
         android:text="@string/hello_world"
-        android:textSize="14sp"
-        android:textStyle="bold" >
+        android:layout_marginLeft="16dp"
+        android:paddingLeft="25dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp">
     </TextView>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/black" />
+        android:layout_height=".5dp"
+        android:background="?android:attr/listDivider" />
 
 </LinearLayout> 

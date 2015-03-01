@@ -6,19 +6,25 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TransactionDetailActivity extends Activity{
-    private String[] dataList = {"data1","data2","data3","data4","data5","data6"};
+    private List<String> datas;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_detail);
+        Intent intent = getIntent();
+//        DAO dao = (DAO) intent.getSerializableExtra("MyClass");
+        datas = new ArrayList<String>();
+        fillData();
 
         final ListView lsView = (ListView)findViewById(R.id.lsDetail);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, dataList);
+        ListAdapter adapter = new ListAdapter(this, datas);
         lsView.setAdapter(adapter);
         lsView.setTextFilterEnabled(true);
 
@@ -26,6 +32,7 @@ public class TransactionDetailActivity extends Activity{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent newActivity = new Intent(TransactionDetailActivity.this, DocumentActivity.class);
+//                newActivity.putExtra("MyClass", (Serializable) dao);
                 startActivity(newActivity);
             }
         });
@@ -35,6 +42,7 @@ public class TransactionDetailActivity extends Activity{
             @Override
             public void onClick(View v) {
                 Intent newActivity = new Intent(TransactionDetailActivity.this, TabLayoutActivity.class);
+//                newActivity.putExtra("MyClass", (Serializable) dao);
                 startActivity(newActivity);
             }
         });
@@ -44,8 +52,15 @@ public class TransactionDetailActivity extends Activity{
             @Override
             public void onClick(View v) {
                 Intent newActivity = new Intent(TransactionDetailActivity.this, CalendarActivity.class);
+//                newActivity.putExtra("MyClass", (Serializable) dao);
                 startActivity(newActivity);
             }
         });
+    }
+
+    public  void fillData() {
+        for (int i = 1; i <= 7; i++) {
+            datas.add("Activity " + i);
+        }
     }
 }

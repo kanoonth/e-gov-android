@@ -30,7 +30,9 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_centerHorizontal="true"
-            android:text="จอง"/>
+            android:background="@drawable/button_custom"
+            android:text="จอง"
+            android:textColor="@color/white"/>
 
     </LinearLayout>
 

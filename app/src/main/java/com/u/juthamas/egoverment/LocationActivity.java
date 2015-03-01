@@ -2,6 +2,7 @@ package com.u.juthamas.egoverment;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -18,6 +19,8 @@ public class LocationActivity extends Activity implements SearchView.OnQueryText
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
 
+        Intent intent = getIntent();
+//        DAO dao = (DAO) intent.getSerializableExtra("MyClass");
         search = (SearchView) findViewById(R.id.searchLocation);
         lsView = (ListView) findViewById(R.id.lsLocation);
         adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, placeList);

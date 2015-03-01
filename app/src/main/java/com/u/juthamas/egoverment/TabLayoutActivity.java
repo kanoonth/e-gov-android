@@ -16,6 +16,8 @@ public class TabLayoutActivity extends TabActivity {
         super.onCreate(savedInstance);
         setContentView(R.layout.activity_tab_controll);
 
+        Intent intentTemp = getIntent();
+//        DAO dao = (DAO) intentTemp.getSerializableExtra("MyClass");
         tabhost = getTabHost();
         TabHost.TabSpec tab1 = tabhost.newTabSpec("First Tab");
         TabHost.TabSpec tab2 = tabhost.newTabSpec("Sec Tab");
@@ -30,6 +32,7 @@ public class TabLayoutActivity extends TabActivity {
 
         intent = new Intent(this, NearMapActivity.class);
         spec = tabhost.newTabSpec("nearMap").setIndicator("Google Map").setContent(intent);
+//        newActivity.putExtra("MyClass", (Serializable) dao);
         tab2.setContent(new Intent(this,NearMapActivity.class));
         tabhost.addTab(spec);
     }
