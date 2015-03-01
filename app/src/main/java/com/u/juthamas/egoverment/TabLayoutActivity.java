@@ -2,6 +2,7 @@ package com.u.juthamas.egoverment;
 
 import android.app.TabActivity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.TabHost;
 
@@ -35,5 +36,10 @@ public class TabLayoutActivity extends TabActivity {
 //        newActivity.putExtra("MyClass", (Serializable) dao);
         tab2.setContent(new Intent(this,NearMapActivity.class));
         tabhost.addTab(spec);
+
+        for(int i=0;i<tabhost.getTabWidget().getChildCount();i++)
+        {
+            tabhost.getTabWidget().getChildAt(i).setBackgroundColor(Color.parseColor(R.color.primary_dark+""));
+        }
     }
 }
