@@ -4,48 +4,47 @@ package com.clientWS;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.mapfap.persistence.Patcher;
 import com.mapfap.persistence.Transaction;
 
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class HttpRequestTask extends AsyncTask<Void, Void, Transaction> {
-    private List<Transaction> list;
-    private String url;
+public class HttpRequestTask extends AsyncTask<Void, Void, List<Transaction>> {
 
-    public HttpRequestTask() {
+    private final Patcher patcher;
+    private final String url;
+
+    public HttpRequestTask(Patcher patcher, long code) {
         super();
-        url = "http://rest-service.guides.spring.io/greeting";
-        list = new ArrayList<Transaction>();
+        this.patcher = patcher;
+        this.url = "http://128.199.85.120/api/v1/transaction/" + code;
     }
 
     @Override
-    protected Transaction doInBackground(Void... params) {
+    protected List<Transaction> doInBackground(Void... params) {
         try {
-            RestTemplate restTemplate = new RestTemplate();
-            restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-            Transaction transaction = restTemplate.getForObject(url, Transaction.class);
-            return transaction;
-        }catch (Exception e){
+            RestTemplate rest = new RestTemplate();
+            rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+
+            Transaction[] transactions = rest.getForObject(url, Transaction[].class);
+            return new ArrayList<Transaction>(Arrays.asList(transactions));
+
+        } catch (Exception e) {
             Log.e("HttpRequestTask", e.getMessage(), e);
         }
+
         return null;
     }
 
     @Override
-    protected void onPostExecute(Transaction transaction) {
-        super.onPostExecute(transaction);
-        list.add(transaction);
+    protected void onPostExecute(List<Transaction> transactions) {
+        super.onPostExecute(transactions);
+        patcher.onRecieveData(transactions);
     }
 
-
-    public List<Transaction> getTransaction(int id) {
-        list.clear();
-        url += id;
-        new HttpRequestTask().execute();
-        return list;
-    }
 }

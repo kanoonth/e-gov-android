@@ -7,7 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
-import java.util.ArrayList;
+import com.clientWS.HttpRequestTask;
+
 import java.util.Calendar;
 import java.util.List;
 
@@ -51,31 +52,11 @@ public class Patcher {
 
     /**
      * Process patch by retrieving data from server.
-     * @return current version after patched.
      */
-    public Long patch() {
-
-//        List<Transaction> transactions = HttpRequestTask.getTransaction(789);
+    public void patch() {
         Long lastTransactionCode = getLastTransactionCode();
-        String request = lastTransactionCode + ";";
-//        String response = "100;INSERT INTO BLAHBLAH;";
-
-        // TODO: Check validity of transactions
-        List<Transaction> transactions = new ArrayList<Transaction>();
-
-        Transaction t1 = new Transaction();
-        t1.code = randomID() + "";
-//        t1.code = (getLastTransactionCode() + 1) + "";
-        t1.type = "S";
-        t1.content = "INSERT INTO mTransaction(code, type, content) VALUES('"+ randomID() +"','S','OK');";
-        transactions.add(t1);
-
-        for (Transaction t: transactions) {
-            applyTransaction(t);
-        }
-
-        // TODO: Maybe better to return loop result. or checking both?
-        return getLastTransactionCode();
+        HttpRequestTask task = new HttpRequestTask(this, lastTransactionCode);
+        task.execute();
     }
 
     private long randomID() {
@@ -97,6 +78,7 @@ public class Patcher {
                 Log.d("Patcher", "Added " + transaction.content);
             } else {
                 retrieveFile(transaction.content);
+                Log.d("Patcher", "Loaded " + transaction.content);
             }
 
             ContentValues values = new ContentValues();
@@ -123,5 +105,18 @@ public class Patcher {
     private boolean retrieveFile(String content) throws Exception {
         throw new Exception("Couldn't retrieve file");
 //        return false;
+    }
+
+    public boolean onRecieveData(List<Transaction> transactions) {
+        Log.d("Patcher", "size = " + transactions.size());
+
+        for (Transaction t: transactions) {
+            if (!applyTransaction(t)) {
+                return false;
+            }
+        }
+
+        return true;
+
     }
 }
