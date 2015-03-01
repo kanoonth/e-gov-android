@@ -9,7 +9,13 @@ import android.os.Bundle;
 import android.widget.ExpandableListView;
 import android.widget.SearchView;
 
+import com.aof.DAO;
+import com.aof.models.Action;
+import com.aof.models.Category;
+
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class TransactionActivity extends Activity implements
         SearchView.OnQueryTextListener, SearchView.OnCloseListener{
@@ -22,6 +28,8 @@ public class TransactionActivity extends Activity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction);
+        Intent intent = getIntent();
+//        DAO dao = (DAO) intent.getSerializableExtra("MyClass");
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         search = (SearchView) findViewById(R.id.search);
@@ -57,6 +65,23 @@ public class TransactionActivity extends Activity implements
     }
 
     public void createData(){
+//
+//        List<Category> categories = new ArrayList<Category>();
+//        Category c1 = new Category();
+//        Category c2 = new Category();
+//        categories.add(c1);
+//        categories.add(c2);
+//        DAO dao = new DAO();
+//        List<Category> categories = dao.getCategories(5);
+
+//        for (Category c: categories) {
+//            TransactionGroup group = new TransactionGroup(c.name);
+//            for (Action a: c.actions) {
+//                group.children.add(a.name);
+//
+//            }
+//        }
+
         for (int j = 0; j < 5; j++) {
             TransactionGroup group = new TransactionGroup("Test " + j);
             for (int i = 0; i < 5; i++) {
@@ -89,6 +114,7 @@ public class TransactionActivity extends Activity implements
 
     public void nextPage(){
         Intent newActivity = new Intent(TransactionActivity.this, TransactionDetailActivity.class);
+//        newActivity.putExtra("MyClass", (Serializable) dao);
         startActivity(newActivity);
     }
 }

@@ -3,6 +3,7 @@ package com.u.juthamas.egoverment;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
@@ -38,6 +39,8 @@ public class NearMapActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_near_maps);
+        Intent intent = getIntent();
+//        DAO dao = (DAO) intent.getSerializableExtra("MyClass");
         createMapView();
         setUpMap();
         addMarker(new LatLng(13.851095, 100.567791),("Kaset"),("สาธิตเกษตร"));
@@ -155,22 +158,32 @@ public class NearMapActivity extends Activity {
         // set map type
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
-        // Get latitude of the current location
-        latitude = myLocation.getLatitude();
+        try {
+            // Get latitude of the current location
+            latitude = myLocation.getLatitude();
 
-        // Get longitude of the current location
-        longitude = myLocation.getLongitude();
-
-        // Create a LatLng object for the current location
-        LatLng latLng = new LatLng(latitude, longitude);
+            // Get longitude of the current location
+            longitude = myLocation.getLongitude();
+            // Create a LatLng object for the current location
+            LatLng latLng = new LatLng(latitude, longitude);
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+            mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title("You are here!").snippet("Consider yourself located").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+        }catch (NullPointerException e){
+            //Can't find location service
+            //Magic location
+            //In some device but still can click button of your location service on map
+            latitude = 13.851095;
+            longitude = 100.567791;
+            LatLng latLng = new LatLng(13.851095, 100.567791);
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        }
 
         // Show the current location in Google Map
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+
 
         // Zoom in the Google Map
         mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title("You are here!").snippet("Consider yourself located").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-    }
+     }
 
     private void addMarker(LatLng latLng,String nameOfPlace,String detail){
         Marker markerPlace = mMap.addMarker(new MarkerOptions().position(latLng).title(nameOfPlace).snippet(detail));
