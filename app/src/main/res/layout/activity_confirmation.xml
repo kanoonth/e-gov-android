@@ -26,7 +26,7 @@
                 android:id="@+id/personal_id_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
+                android:inputType="number"
                 android:layout_weight="1" />
         </LinearLayout>
 
@@ -48,7 +48,7 @@
                 android:id="@+id/email_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
+                android:inputType="number"
                 android:layout_weight="1" />
         </LinearLayout>
     </LinearLayout>
