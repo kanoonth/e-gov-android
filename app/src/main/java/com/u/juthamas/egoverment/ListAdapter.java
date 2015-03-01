@@ -7,18 +7,22 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ListAdapter extends BaseAdapter{
-    Context ctx;
-    LayoutInflater lInflater;
-    List<String> data;
+    private Context ctx;
+    private LayoutInflater lInflater;
+    private List<String> data;
+    private List<String> temp;
 
     ListAdapter(Context context, List<String> data) {
         ctx = context;
         this.data = data;
         lInflater = (LayoutInflater) ctx
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        temp = new ArrayList<String>();
+        temp.addAll(data);
     }
 
     @Override
@@ -46,5 +50,21 @@ public class ListAdapter extends BaseAdapter{
 
         ((TextView) view.findViewById(R.id.lsText)).setText(data.get(position));
         return view;
+    }
+
+    public void filterData(String query){
+        data.clear();
+        if(query.isEmpty()){
+            data.addAll(temp);
+        }
+        else{
+            query = query.toLowerCase();
+            for(String q : temp){
+                if(q.toLowerCase().contains(query)){
+                    data.add(q);
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 }

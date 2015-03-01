@@ -9,13 +9,11 @@ import android.os.Bundle;
 import android.widget.ExpandableListView;
 import android.widget.SearchView;
 
-import com.aof.DAO;
-import com.aof.models.Action;
-import com.aof.models.Category;
-
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
+
+//import com.aof.DAO;
+//import com.aof.models.Action;
+//import com.aof.models.Category;
 
 public class TransactionActivity extends Activity implements
         SearchView.OnQueryTextListener, SearchView.OnCloseListener{
