@@ -33,7 +33,7 @@
 
         <!--MainActivity-->
         <activity
-            android:name="com.u.juthamas.egoverment.MainActivity"
+            android:name="com.kanoon.egov.activity.MainActivity"
             android:label="หน้าหลัก"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -45,42 +45,42 @@
 
         <!--Extra_information-->
         <activity
-            android:name=".ExtraInformationActivity"
+            android:name="com.kanoon.egov.activity.ExtraInformationActivity"
             android:label="เซ็นสำเนาถูกต้อง"
             android:screenOrientation="portrait">
         </activity>
 
         <!--CalendarActivity-->
         <activity
-            android:name="com.u.juthamas.egoverment.CalendarActivity"
+            android:name="com.kanoon.egov.activity.CalendarActivity"
             android:label="เลือกวันที่และเวลา"
             android:screenOrientation="portrait">
         </activity>
 
         <!--Check_transaction-->
         <activity
-            android:name=".CheckTransactionActivity"
+            android:name="com.kanoon.egov.activity.CheckTransactionActivity"
             android:label="ทำบัตรประชาชน"
             android:screenOrientation="portrait">
         </activity>
 
         <!--Confirmation-->
         <activity
-            android:name=".ConfirmationActivity"
+            android:name="com.kanoon.egov.activity.ConfirmationActivity"
             android:label="ยืนยันบุคคล"
             android:screenOrientation="portrait">
         </activity>
 
         <!--Document-->
         <activity
-            android:name=".DocumentActivity"
+            android:name="com.kanoon.egov.activity.DocumentActivity"
             android:label="สำเนาทะเบียนบ้าน"
             android:screenOrientation="portrait">
         </activity>
 
         <!--Location-->
         <activity
-            android:name=".LocationActivity"
+            android:name="com.kanoon.egov.activity.LocationActivity"
             android:label="สถานที่"
             android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait">
@@ -88,41 +88,41 @@
 
         <!--Near Map-->
         <activity
-            android:name=".NearMapActivity"
+            android:name="com.kanoon.egov.activity.NearMapActivity"
             android:label="สถานที่"
             android:screenOrientation="portrait">
         </activity>
 
         <!--Review page-->
         <activity
-            android:name=".ReviewPageActivity"
+            android:name="com.kanoon.egov.activity.ReviewPageActivity"
             android:label=""
             android:screenOrientation="portrait">
         </activity>
 
         <!--Route map-->
         <activity
-            android:name=".RouteMapActivity"
+            android:name="com.kanoon.egov.activity.RouteMapActivity"
             android:label="สถานที่"
             android:screenOrientation="portrait">
         </activity>
 
         <!--Transaction-->
         <activity
-            android:name=".TransactionActivity"
+            android:name="com.kanoon.egov.activity.TransactionActivity"
             android:label=""
             android:screenOrientation="portrait">
         </activity>
 
         <!--Transaction detail-->
         <activity
-            android:name=".TransactionDetailActivity"
+            android:name="com.kanoon.egov.activity.TransactionDetailActivity"
             android:label="ทำบัตรประชาชน"
             android:screenOrientation="portrait">
         </activity>
 
         <activity
-            android:name=".TabLayoutActivity"
+            android:name="com.kanoon.egov.activity.TabLayoutActivity"
             android:label="สถานที่ "
             android:screenOrientation="portrait">
         </activity>
