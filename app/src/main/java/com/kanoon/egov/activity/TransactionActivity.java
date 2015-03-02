@@ -30,7 +30,6 @@ public class TransactionActivity extends Activity implements
         setContentView(R.layout.activity_transaction);
         Intent intent = getIntent();
         dao = DAO.getInstance();
-        dao.setContent(this);
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         search = (SearchView) findViewById(R.id.search);

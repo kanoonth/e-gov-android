@@ -30,6 +30,7 @@ public class MainActivity extends Activity {
         patcher.patch();
         Copy.exec();
         dao = DAO.getInstance();
+        dao.setContent(this);
         data = new ArrayList<String>();
         fillData();
         final ListView lsHis = (ListView)findViewById(R.id.listHistory);

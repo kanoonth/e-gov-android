@@ -3,6 +3,7 @@ package com.kanoon.egov.persistence;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.kanoon.egov.models.Action;
 import com.kanoon.egov.models.Category;
@@ -98,11 +99,12 @@ public class DAO {
 //    }
 
     public List<Document> getDocument(String actionName){
+//        Log.d("aaaaa",actionName);
         List<Document> listDocs = new ArrayList<Document>();
         SQLiteDatabase db = sqliteConnector.getReadableDatabase();
-        Cursor c = db.rawQuery("SELECT * FROM Document,Action,Requirement " +
-                "Where Requirement.action_id == Action.id and Requirement.document_id == Document.id and" +
-                "Action.name == "+actionName+";",new String[0]);
+        Cursor c = db.rawQuery("SELECT Document.name as name,Document.photo_path as photo_path,Document.id as id, Document.description as description FROM Document,Action,Requirement " +
+                "Where Requirement.action_id == Action.id and Requirement.document_id == Document.id " +
+                ";",new String[0]);
         c.moveToFirst();
         while(true){
             Document doc = new Document();
