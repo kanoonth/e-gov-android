@@ -10,18 +10,21 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.kanoon.egov.R;
+import com.kanoon.egov.persistence.DAO;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TransactionDetailActivity extends Activity{
     private List<String> datas;
+    private DAO dao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_detail);
         Intent intent = getIntent();
-//        DAO dao = (DAO) intent.getSerializableExtra("MyClass");
+        dao = (DAO) intent.getSerializableExtra("MyClass");
         datas = new ArrayList<String>();
         fillData();
 
@@ -34,7 +37,7 @@ public class TransactionDetailActivity extends Activity{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent newActivity = new Intent(TransactionDetailActivity.this, DocumentActivity.class);
-//                newActivity.putExtra("MyClass", (Serializable) dao);
+                newActivity.putExtra("MyClass", (Serializable) dao);
                 startActivity(newActivity);
             }
         });
@@ -44,7 +47,7 @@ public class TransactionDetailActivity extends Activity{
             @Override
             public void onClick(View v) {
                 Intent newActivity = new Intent(TransactionDetailActivity.this, TabLayoutActivity.class);
-//                newActivity.putExtra("MyClass", (Serializable) dao);
+                newActivity.putExtra("MyClass", (Serializable) dao);
                 startActivity(newActivity);
             }
         });

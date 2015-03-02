@@ -6,12 +6,18 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ExpandableListView;
 import android.widget.SearchView;
 
 import com.kanoon.egov.R;
+import com.kanoon.egov.models.Action;
+import com.kanoon.egov.models.Category;
+import com.kanoon.egov.persistence.DAO;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class TransactionActivity extends Activity implements
         SearchView.OnQueryTextListener, SearchView.OnCloseListener{
@@ -20,12 +26,13 @@ public class TransactionActivity extends Activity implements
     private SearchView search;
     private ExpandableListView lsView;
     private TransactionExpandableListAdapter adapter;
+    private DAO dao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction);
         Intent intent = getIntent();
-//        DAO dao = (DAO) intent.getSerializableExtra("MyClass");
+        dao = DAO.getInstance();
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         search = (SearchView) findViewById(R.id.search);
@@ -61,30 +68,27 @@ public class TransactionActivity extends Activity implements
     }
 
     public void createData(){
-//
-//        List<Category> categories = new ArrayList<Category>();
-//        Category c1 = new Category();
-//        Category c2 = new Category();
-//        categories.add(c1);
-//        categories.add(c2);
-//        DAO dao = new DAO();
-//        List<Category> categories = dao.getCategories(5);
 
-//        for (Category c: categories) {
-//            TransactionGroup group = new TransactionGroup(c.name);
-//            for (Action a: c.actions) {
-//                group.children.add(a.name);
-//
-//            }
-//        }
+        List<Category> categories = dao.getCategories(5);
+        Log.d("fffff",categories.size()+"");
 
-        for (int j = 0; j < 5; j++) {
-            TransactionGroup group = new TransactionGroup("Test " + j);
-            for (int i = 0; i < 5; i++) {
-                group.children.add("Sub Item" + i);
+        for (Category c: categories) {
+            TransactionGroup group = new TransactionGroup(c.name);
+            Log.d("fffff",c.name+"");
+            for (Action a: c.actions) {
+                Log.d("fffff",a.name+"");
+                group.children.add(a.name);
             }
             groups.add(group);
         }
+//
+//        for (int j = 0; j < 5; j++) {
+//            TransactionGroup group = new TransactionGroup("Test " + j);
+//            for (int i = 0; i < 5; i++) {
+//                group.children.add("Sub Item" + i);
+//            }
+//            groups.add(group);
+//        }
     }
 
     @Override

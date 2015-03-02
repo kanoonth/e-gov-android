@@ -20,7 +20,20 @@ public class DAO {
 
     private SqliteConnector sqliteConnector;
 
-    public DAO(Context context) {
+    private static DAO singleton = new DAO( );
+
+    /* A private Constructor prevents any other
+     * class from instantiating.
+     */
+    private DAO() {}
+
+    /* Static 'instance' method */
+    public static DAO getInstance( ) {
+        return singleton;
+    }
+
+
+    public void setContent(Context context){
         sqliteConnector = new SqliteConnector(context);
     }
 
@@ -33,6 +46,9 @@ public class DAO {
         SQLiteDatabase db = sqliteConnector.getReadableDatabase();
 
         Cursor ca = db.rawQuery("SELECT * FROM Category LIMIT " + limitNumber + ";",new String[0]);
+        if(limitNumber > ca.getCount()){
+            limitNumber = ca.getCount();
+        }
         ca.moveToFirst();
         for(int i=0;i<limitNumber;i++) {
             Category category = new Category();

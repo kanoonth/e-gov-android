@@ -11,11 +11,14 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.kanoon.egov.persistence.Copy;
+import com.kanoon.egov.persistence.DAO;
 import com.kanoon.egov.persistence.Patcher;
 import com.kanoon.egov.R;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends Activity {
     private List<String> data;
@@ -30,7 +33,8 @@ public class MainActivity extends Activity {
 
         data = new ArrayList<String>();
         fillData();
-//        final DAO dao = new DAO();
+        final DAO dao = DAO.getInstance();
+        dao.setContent(getBaseContext());
         final ListView lsHis = (ListView)findViewById(R.id.listHistory);
         ListAdapter adapter = new ListAdapter(this, data);
         lsHis.setAdapter(adapter);
@@ -40,7 +44,7 @@ public class MainActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent newActivity = new Intent(MainActivity.this, CheckTransactionActivity.class);
-                //                newActivity.putExtra("MyClass", (Serializable) dao);
+                newActivity.putExtra("MyClass", (Serializable) dao);
 //                newActivity.putExtra("MyClass", (Serializable) parse);
                 startActivity(newActivity);
             }
@@ -51,7 +55,6 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent newActivity = new Intent(MainActivity.this, TransactionActivity.class);
-//                newActivity.putExtra("MyClass", (Serializable) dao);
 //                newActivity.putExtra("MyClass", (Serializable) parse);
                 startActivity(newActivity);
             }
