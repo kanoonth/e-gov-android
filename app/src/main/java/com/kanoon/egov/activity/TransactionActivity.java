@@ -10,8 +10,11 @@ import android.widget.ExpandableListView;
 import android.widget.SearchView;
 
 import com.kanoon.egov.R;
+import com.kanoon.egov.models.Category;
+import com.kanoon.egov.persistence.DAO;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class TransactionActivity extends Activity implements
         SearchView.OnQueryTextListener, SearchView.OnCloseListener{
@@ -20,12 +23,13 @@ public class TransactionActivity extends Activity implements
     private SearchView search;
     private ExpandableListView lsView;
     private TransactionExpandableListAdapter adapter;
+    private DAO dao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction);
         Intent intent = getIntent();
-//        DAO dao = (DAO) intent.getSerializableExtra("MyClass");
+        dao = DAO.getInstance();
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         search = (SearchView) findViewById(R.id.search);
@@ -77,11 +81,11 @@ public class TransactionActivity extends Activity implements
 //
 //            }
 //        }
-
-        for (int j = 0; j < 5; j++) {
-            TransactionGroup group = new TransactionGroup("Test " + j);
-            for (int i = 0; i < 5; i++) {
-                group.children.add("Sub Item" + i);
+        List<Category> list = dao.getCategories(5);
+        for (int i = 0; i < list.size(); i++) {
+            TransactionGroup group = new TransactionGroup(list.get(i).name);
+            for (int j = 0; j < list.get(i).actions.size(); j++) {
+                group.children.add(list.get(i).actions.get(j).name);
             }
             groups.add(group);
         }

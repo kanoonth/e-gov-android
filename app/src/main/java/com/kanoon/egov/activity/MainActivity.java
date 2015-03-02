@@ -12,6 +12,7 @@ import android.widget.ListView;
 
 import com.kanoon.egov.R;
 import com.kanoon.egov.persistence.Copy;
+import com.kanoon.egov.persistence.DAO;
 import com.kanoon.egov.persistence.Patcher;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import java.util.List;
 
 public class MainActivity extends Activity {
     private List<String> data;
+    private DAO dao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,10 +29,9 @@ public class MainActivity extends Activity {
         Patcher patcher = new Patcher(getBaseContext());
         patcher.patch();
         Copy.exec();
-
+        dao = DAO.getInstance();
         data = new ArrayList<String>();
         fillData();
-//        final DAO dao = new DAO();
         final ListView lsHis = (ListView)findViewById(R.id.listHistory);
         ListAdapter adapter = new ListAdapter(this, data);
         lsHis.setAdapter(adapter);

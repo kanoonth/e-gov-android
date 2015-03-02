@@ -11,12 +11,16 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.kanoon.egov.R;
+import com.kanoon.egov.models.Document;
+import com.kanoon.egov.persistence.DAO;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TransactionDetailActivity extends Activity{
     private List<String> datas;
+    private String actionName;
+    private DAO dao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,15 +28,13 @@ public class TransactionDetailActivity extends Activity{
 
 
         Intent intent = getIntent();
-
-        String data = "";
+        dao = DAO.getInstance();
         Bundle extras = intent.getExtras();
         if(extras != null){
-            data = extras.getString("submenuName");
+            actionName = extras.getString("submenuName");
         }
 
-        Log.v("sub menu name",data);
-//        DAO dao = (DAO) intent.getSerializableExtra("MyClass");
+        Log.v("sub menu name",actionName);
         datas = new ArrayList<String>();
         fillData();
 
@@ -45,7 +47,6 @@ public class TransactionDetailActivity extends Activity{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent newActivity = new Intent(TransactionDetailActivity.this, DocumentActivity.class);
-//                newActivity.putExtra("MyClass", (Serializable) dao);
                 startActivity(newActivity);
             }
         });
@@ -55,7 +56,6 @@ public class TransactionDetailActivity extends Activity{
             @Override
             public void onClick(View v) {
                 Intent newActivity = new Intent(TransactionDetailActivity.this, TabLayoutActivity.class);
-//                newActivity.putExtra("MyClass", (Serializable) dao);
                 startActivity(newActivity);
             }
         });
@@ -65,15 +65,15 @@ public class TransactionDetailActivity extends Activity{
             @Override
             public void onClick(View v) {
                 Intent newActivity = new Intent(TransactionDetailActivity.this, CalendarActivity.class);
-//                newActivity.putExtra("MyClass", (Serializable) dao);
                 startActivity(newActivity);
             }
         });
     }
 
     public  void fillData() {
-        for (int i = 1; i <= 7; i++) {
-            datas.add("Activity " + i);
+        List<Document> listDoc = dao.getDocument(actionName);
+        for (int i = 0; i <listDoc.size()  ; i++) {
+            datas.add(listDoc.get(i).name);
         }
     }
 }

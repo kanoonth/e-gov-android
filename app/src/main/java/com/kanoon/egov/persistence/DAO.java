@@ -20,7 +20,20 @@ public class DAO {
 
     private SqliteConnector sqliteConnector;
 
-    public DAO(Context context) {
+    private static DAO singleton = new DAO( );
+
+    /* A private Constructor prevents any other
+     * class from instantiating.
+     */
+    private DAO() {}
+
+    /* Static 'instance' method */
+    public static DAO getInstance( ) {
+        return singleton;
+    }
+
+
+    public void setContent(Context context){
         sqliteConnector = new SqliteConnector(context);
     }
 
@@ -33,6 +46,9 @@ public class DAO {
         SQLiteDatabase db = sqliteConnector.getReadableDatabase();
 
         Cursor ca = db.rawQuery("SELECT * FROM Category LIMIT " + limitNumber + ";",new String[0]);
+        if(limitNumber > ca.getCount()){
+            limitNumber = ca.getCount();
+        }
         ca.moveToFirst();
         for(int i=0;i<limitNumber;i++) {
             Category category = new Category();
@@ -41,9 +57,7 @@ public class DAO {
             categories.add(category);
             ca.moveToNext();
         }
-        Cursor c = db.rawQuery("SELECT name as categoryName, id as categoryId, (Acs.name) as actionName, Acs.id as actionId, (Acs.description) as actionDescription " +
-                "FROM Category,(SELECT * FROM Action where category_id IN " +
-                "(SELECT id FROM Category LIMIT "+ limitNumber +")as Cs)as Acs Where Category.id = Acs.category_id;", new String[0]);
+        Cursor c = db.rawQuery("SELECT Category.name as categoryName, Category.id as categoryId, Acsrr.name as actionName, Acsrr.id as actionId, Acsrr.description as actionDescription FROM Category, (SELECT * FROM Action where category_id IN ( SELECT id FROM Category LIMIT "+limitNumber+" )) as Acsrr Where Category.id = Acsrr.category_id;;", new String[0]);
         if(c.getCount() == 0) {
             // No data.
         } else {
@@ -83,10 +97,12 @@ public class DAO {
 //        }
 //    }
 
-    public List<Document> getDocument(){
+    public List<Document> getDocument(String actionName){
         List<Document> listDocs = new ArrayList<Document>();
         SQLiteDatabase db = sqliteConnector.getReadableDatabase();
-        Cursor c = db.rawQuery("SELECT * FROM Document;",new String[0]);
+        Cursor c = db.rawQuery("SELECT * FROM Document,Action,Requirement " +
+                "Where Requirement.action_id == Action.id and Requirement.document_id == Document.id and" +
+                "Action.name == "+actionName+";",new String[0]);
         c.moveToFirst();
         while(true){
             Document doc = new Document();
