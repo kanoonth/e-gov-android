@@ -108,8 +108,10 @@ public class TransactionActivity extends Activity implements
         return false;
     }
 
-    public void nextPage(){
+    public void nextPage(String t){
+        String txt = t;
         Intent newActivity = new Intent(TransactionActivity.this, TransactionDetailActivity.class);
+        newActivity.putExtra("submenuName",txt);
 //        newActivity.putExtra("MyClass", (Serializable) dao);
         startActivity(newActivity);
     }

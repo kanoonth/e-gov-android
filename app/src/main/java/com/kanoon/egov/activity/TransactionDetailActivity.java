@@ -4,6 +4,7 @@ package com.kanoon.egov.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -20,7 +21,17 @@ public class TransactionDetailActivity extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_detail);
+
+
         Intent intent = getIntent();
+
+        String data = "";
+        Bundle extras = intent.getExtras();
+        if(extras != null){
+            data = extras.getString("submenuName");
+        }
+
+        Log.v("sub menu name",data);
 //        DAO dao = (DAO) intent.getSerializableExtra("MyClass");
         datas = new ArrayList<String>();
         fillData();

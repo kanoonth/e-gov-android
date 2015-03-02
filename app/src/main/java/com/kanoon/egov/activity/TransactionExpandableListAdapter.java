@@ -96,7 +96,7 @@ public class TransactionExpandableListAdapter extends BaseExpandableListAdapter{
             @Override
             public void onClick(View v) {
                 Toast.makeText(transaction.getApplicationContext(),children,Toast.LENGTH_SHORT).show();
-                transaction.nextPage();
+                transaction.nextPage(children);
             }
         });
         return convertView;
