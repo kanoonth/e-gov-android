@@ -10,6 +10,7 @@ import android.util.Log;
 import com.kanoon.egov.http.DownloadFileTask;
 import com.kanoon.egov.http.GetTransactionTask;
 
+import java.io.File;
 import java.util.Calendar;
 import java.util.List;
 
@@ -21,9 +22,15 @@ import java.util.List;
 public class Patcher {
 
     private SqliteConnector sqliteConnector;
+    private static final String IMAGE_URL = "http://128.199.85.120/images/upload/";
 
     public Patcher(Context context) {
-         sqliteConnector = new SqliteConnector(context);
+        sqliteConnector = new SqliteConnector(context);
+
+        File folder = new File("/data/data/com.kanoon.egov/files/");
+        if (!folder.exists()) {
+            folder.mkdir();
+        }
     }
 
     /**
@@ -105,9 +112,8 @@ public class Patcher {
         return true;
     }
 
-    private boolean retrieveFile(String url) throws Exception {
-        // TODO: What is filename???
-        DownloadFileTask task = new DownloadFileTask(this, url, url);
+    private boolean retrieveFile(String content) throws Exception {
+        DownloadFileTask task = new DownloadFileTask(this, IMAGE_URL + content, content);
         task.execute();
         return true;
     }
