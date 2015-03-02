@@ -2,17 +2,19 @@ package com.kanoon.egov.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.kanoon.egov.R;
 import com.kanoon.egov.persistence.Copy;
 import com.kanoon.egov.persistence.Patcher;
-import com.kanoon.egov.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,9 @@ public class MainActivity extends Activity {
         Patcher patcher = new Patcher(getBaseContext());
         patcher.patch();
         Copy.exec();
+
+        ImageView imageView = (ImageView) findViewById(R.id.testImage);
+        imageView.setImageBitmap(BitmapFactory.decodeFile("/data/data/com.kanoon.egov/files/1_fRxsTiexGbnT.jpg"));
 
         data = new ArrayList<String>();
         fillData();
