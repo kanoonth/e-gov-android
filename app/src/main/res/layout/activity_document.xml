@@ -5,17 +5,18 @@
     android:layout_height="match_parent"
     android:gravity="center">
 
-    <!--<ImageView-->
-    <!--android:layout_width="400dp"-->
-    <!--android:layout_height="400dp"-->
-    <!--android:id="@+id/imageView"-->
-    <!--android:src="@drawable/image" />-->
+    <ImageView
+        android:id="@+id/docImage"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".6"/>
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center">
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:layout_weight=".3">
 
         <TextView
             android:layout_width="wrap_content"
@@ -56,9 +57,10 @@
     <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="New Button"
+        android:layout_height="0dp"
+        android:text="รายละเอียดเพิ่มเติม"
         android:background="@drawable/button_custom"
         android:textColor="@color/white"
-        android:id="@+id/Docbtn" />
+        android:id="@+id/Docbtn"
+        android:layout_weight=".1"/>
 </LinearLayout>
