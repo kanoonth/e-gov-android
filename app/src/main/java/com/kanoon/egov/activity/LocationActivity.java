@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.*;
 
 import com.kanoon.egov.R;
+import com.kanoon.egov.persistence.DAO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,12 +17,14 @@ public class LocationActivity extends Activity implements SearchView.OnQueryText
     private ListView lsView;
     private com.kanoon.egov.activity.ListAdapter adapter;
     private List<String> places;
+    private DAO dao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
 
+        dao = DAO.getInstance();
         places = new ArrayList<String>();
         fillData();
 

@@ -3,13 +3,11 @@ package com.kanoon.egov.persistence;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.kanoon.egov.models.Action;
 import com.kanoon.egov.models.Category;
 import com.kanoon.egov.models.Document;
 import com.kanoon.egov.models.Ticket;
-import com.kanoon.egov.persistence.SqliteConnector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,18 +103,22 @@ public class DAO {
         Cursor c = db.rawQuery("SELECT Document.name as name,Document.photo_path as photo_path,Document.id as id, Document.description as description FROM Document,Action,Requirement " +
                 "Where Requirement.action_id == Action.id and Requirement.document_id == Document.id " +
                 ";",new String[0]);
-        c.moveToFirst();
-        while(true){
-            Document doc = new Document();
-            doc.description = c.getString(c.getColumnIndexOrThrow("description"));
-            doc.id = c.getLong(c.getColumnIndexOrThrow("id"));
-            doc.name = c.getString(c.getColumnIndexOrThrow("name"));
-            doc.photo_path = c.getString(c.getColumnIndexOrThrow("photo_path"));
-            listDocs.add(doc);
-            if(c.isLast()){
-                break;
+
+
+        if(c.getCount() != 0){
+            c.moveToFirst();
+            while(true){
+                Document doc = new Document();
+                doc.description = c.getString(c.getColumnIndexOrThrow("description"));
+                doc.id = c.getLong(c.getColumnIndexOrThrow("id"));
+                doc.name = c.getString(c.getColumnIndexOrThrow("name"));
+                doc.photo_path = c.getString(c.getColumnIndexOrThrow("photo_path"));
+                listDocs.add(doc);
+                if(c.isLast()){
+                    break;
+                }
+                c.moveToNext();
             }
-            c.moveToNext();
         }
         return listDocs;
     }
