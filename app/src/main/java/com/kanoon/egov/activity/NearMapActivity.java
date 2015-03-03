@@ -61,8 +61,16 @@ public class NearMapActivity extends Activity {
 //        DAO dao = (DAO) intent.getSerializableExtra("MyClass");
         createMapView();
         setUpMap();
-        addMarker(new LatLng(13.851095, 100.567791),("Kaset"),("สาธิตเกษตร"));
-        addMarker(new LatLng(13.640073, 100.555517),("Wat samean"),("วัดเสมียนนารี"));
+        Log.d("aaaaaaaa",namePlace.size()+"");
+        for(int i=0;i<namePlace.size();i++){
+            double latitude = Double.parseDouble(lat.get(i));
+            double longitude = Double.parseDouble(log.get(i));
+            Log.d("zzzzz",latitude+"");
+            Log.d("zzzzzzzzzz",longitude+"");
+            addMarker(new LatLng(latitude,longitude),namePlace.get(i));
+        }
+        addMarker(new LatLng(13.851095, 100.567791),("Kaset"));
+        addMarker(new LatLng(13.640073, 100.555517),("Wat samean"));
         zoom(new LatLng(13.640073, 100.555517),new LatLng(latitude,longitude));
       }
 
@@ -203,8 +211,8 @@ public class NearMapActivity extends Activity {
         mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
      }
 
-    private void addMarker(LatLng latLng,String nameOfPlace,String detail){
-        Marker markerPlace = mMap.addMarker(new MarkerOptions().position(latLng).title(nameOfPlace).snippet(detail));
+    private void addMarker(LatLng latLng,String nameOfPlace){
+        Marker markerPlace = mMap.addMarker(new MarkerOptions().position(latLng).title(nameOfPlace));
 
     }
 
