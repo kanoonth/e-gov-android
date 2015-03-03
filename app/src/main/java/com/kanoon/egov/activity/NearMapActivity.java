@@ -23,6 +23,10 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.kanoon.egov.R;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 
 public class NearMapActivity extends Activity {
     GoogleMap mMap;
@@ -34,11 +38,26 @@ public class NearMapActivity extends Activity {
     private Circle circle;
     private LocationManager lm;
 
+    private List<String> namePlace;
+    private List<String> lat;
+    private List<String> log;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_near_maps);
+
+        namePlace = new ArrayList<String>();
+        lat = new ArrayList<String>();
+        log = new ArrayList<String>();
+
         Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            namePlace = Arrays.asList(extras.getStringArray("namePlace"));
+            lat = Arrays.asList(extras.getStringArray("latitude"));
+            log = Arrays.asList(extras.getStringArray("longitude"));
+        }
 //        DAO dao = (DAO) intent.getSerializableExtra("MyClass");
         createMapView();
         setUpMap();
