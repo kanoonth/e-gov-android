@@ -21,8 +21,8 @@ public class TabLayoutActivity extends TabActivity {
     private GetPlaceTask getPlaceTask;
     private List<Place> places;
     private List<String> namePlace;
-    private List<Float> lat;
-    private List<Float> log;
+    private List<String> lat;
+    private List<String> log;
 
     @Override
     public void onCreate(Bundle savedInstance){
@@ -38,8 +38,8 @@ public class TabLayoutActivity extends TabActivity {
 
         places = new ArrayList<Place>();
         namePlace = new ArrayList<String>();
-        lat = new ArrayList<Float>();
-        log = new ArrayList<Float>();
+        lat = new ArrayList<String>();
+        log = new ArrayList<String>();
 
         getPlaceTask = new GetPlaceTask(this, id);
         getPlaceTask.execute();
@@ -51,8 +51,8 @@ public class TabLayoutActivity extends TabActivity {
         this.places.addAll(places);
         for(Place p : places){
             namePlace.add(p.name);
-            lat.add(p.latitude);
-            log.add(p.longitude);
+            lat.add(p.latitude +"");
+            log.add(p.longitude+"");
         }
 
         doTabhost();
@@ -74,6 +74,9 @@ public class TabLayoutActivity extends TabActivity {
         tabhost.addTab(spec);
 
         intent = new Intent(this, NearMapActivity.class);
+        intent.putExtra("namePlace", namePlace.toArray(new String[0]));
+        intent.putExtra("latitude", lat.toArray(new String[0]));
+        intent.putExtra("longitude", log.toArray(new String[0]));
         spec = tabhost.newTabSpec("nearMap").setIndicator("Google Map").setContent(intent);
 //        newActivity.putExtra("MyClass", (Serializable) dao);
         tab2.setContent(new Intent(this,NearMapActivity.class));
