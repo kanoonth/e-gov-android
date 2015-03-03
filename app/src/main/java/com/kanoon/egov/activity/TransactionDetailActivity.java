@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,13 +26,13 @@ public class TransactionDetailActivity extends Activity {
     private String actionName;
     private long id;
     private DAO dao;
-
+    private boolean isSelectPlace;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_detail);
 
-
+        isSelectPlace = false;
         Intent intent = getIntent();
         dao = DAO.getInstance();
         Bundle extras = intent.getExtras();
@@ -44,6 +46,8 @@ public class TransactionDetailActivity extends Activity {
         fillData();
 
         final ListView lsView = (ListView) findViewById(R.id.lsDetail);
+        final Button placeBtn = (Button) findViewById(R.id.cPlaceBtn);
+        final Button reserveBtn = (Button) findViewById(R.id.reserveBtn);
         ListAdapter adapter = new ListAdapter(this, datas);
         lsView.setAdapter(adapter);
         lsView.setTextFilterEnabled(true);
@@ -56,17 +60,23 @@ public class TransactionDetailActivity extends Activity {
             }
         });
 
-        final Button placeBtn = (Button) findViewById(R.id.cPlaceBtn);
         placeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                isSelectPlace = true;
+                reserveBtn.setBackgroundResource(R.drawable.button_custom);
+//                reserveBtn.setBackground(R.drawable.button_custom);
                 Intent newActivity = new Intent(TransactionDetailActivity.this, TabLayoutActivity.class);
                 newActivity.putExtra("id",id);
                 startActivity(newActivity);
             }
         });
 
-        final Button reserveBtn = (Button) findViewById(R.id.reserveBtn);
+
+        if(!isSelectPlace) {
+            reserveBtn.setEnabled(false);
+            reserveBtn.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#B6B6B4")));
+        }
         reserveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
