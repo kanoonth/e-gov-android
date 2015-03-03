@@ -65,7 +65,6 @@ public class TransactionDetailActivity extends Activity {
             public void onClick(View v) {
                 isSelectPlace = true;
                 reserveBtn.setBackgroundResource(R.drawable.button_custom);
-//                reserveBtn.setBackground(R.drawable.button_custom);
                 Intent newActivity = new Intent(TransactionDetailActivity.this, TabLayoutActivity.class);
                 newActivity.putExtra("id",id);
                 startActivity(newActivity);
