@@ -4,10 +4,10 @@ package com.kanoon.egov.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.*;
+import android.widget.ListView;
+import android.widget.SearchView;
 
 import com.kanoon.egov.R;
-import com.kanoon.egov.persistence.DAO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,23 +16,25 @@ public class LocationActivity extends Activity implements SearchView.OnQueryText
     private SearchView search;
     private ListView lsView;
     private com.kanoon.egov.activity.ListAdapter adapter;
-    private List<String> places;
-    private DAO dao;
+    private List<String> namePlace;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
+        namePlace = new ArrayList<String>();
 
-        dao = DAO.getInstance();
-        places = new ArrayList<String>();
-        fillData();
-
+        long id = 0;
         Intent intent = getIntent();
-//        DAO dao = (DAO) intent.getSerializableExtra("MyClass");
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            id = extras.getLong("id");
+        }
+
         search = (SearchView) findViewById(R.id.searchLocation);
         lsView = (ListView) findViewById(R.id.lsLocation);
-        adapter = new com.kanoon.egov.activity.ListAdapter(this,places);
+        adapter = new com.kanoon.egov.activity.ListAdapter(this,namePlace);
         lsView.setAdapter(adapter);
         lsView.setTextFilterEnabled(true);
         setupSearchView();
@@ -55,9 +57,4 @@ public class LocationActivity extends Activity implements SearchView.OnQueryText
         return false;
     }
 
-    public  void fillData() {
-        for (int i = 1; i <= 4; i++) {
-            places.add("places " + i);
-        }
-    }
 }

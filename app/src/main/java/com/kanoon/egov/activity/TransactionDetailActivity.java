@@ -22,6 +22,7 @@ import java.util.List;
 public class TransactionDetailActivity extends Activity {
     private List<String> datas;
     private String actionName;
+    private long id;
     private DAO dao;
 
     @Override
@@ -35,6 +36,7 @@ public class TransactionDetailActivity extends Activity {
         Bundle extras = intent.getExtras();
         if (extras != null) {
             actionName = extras.getString("submenuName");
+            id = extras.getLong("id");
         }
 
         Log.v("sub menu name", actionName);
@@ -59,6 +61,7 @@ public class TransactionDetailActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent newActivity = new Intent(TransactionDetailActivity.this, TabLayoutActivity.class);
+                newActivity.putExtra("id",id);
                 startActivity(newActivity);
             }
         });

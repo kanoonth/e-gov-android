@@ -10,6 +10,7 @@ import android.widget.ExpandableListView;
 import android.widget.SearchView;
 
 import com.kanoon.egov.R;
+import com.kanoon.egov.models.Action;
 import com.kanoon.egov.models.Category;
 import com.kanoon.egov.persistence.DAO;
 
@@ -19,7 +20,8 @@ import java.util.List;
 public class TransactionActivity extends Activity implements
         SearchView.OnQueryTextListener, SearchView.OnCloseListener{
 
-    private ArrayList<TransactionGroup> groups = new ArrayList<TransactionGroup>();
+    private ArrayList<TransactionGroup> groups;
+    private List<List<Action>> actions;
     private SearchView search;
     private ExpandableListView lsView;
     private TransactionExpandableListAdapter adapter;
@@ -37,6 +39,9 @@ public class TransactionActivity extends Activity implements
         search.setIconifiedByDefault(false);
         search.setOnQueryTextListener(this);
         search.setOnCloseListener(this);
+
+        actions = new ArrayList<List<Action>>();
+        groups = new ArrayList<TransactionGroup>();
 
         //display the list
         displayList();
@@ -85,6 +90,7 @@ public class TransactionActivity extends Activity implements
         for (int i = 0; i < list.size(); i++) {
             TransactionGroup group = new TransactionGroup(list.get(i).name);
             for (int j = 0; j < list.get(i).actions.size(); j++) {
+                actions.add(list.get(i).actions);
                 group.children.add(list.get(i).actions.get(j).name);
             }
             groups.add(group);
@@ -114,8 +120,19 @@ public class TransactionActivity extends Activity implements
 
     public void nextPage(String t){
         String txt = t;
+        long id=0;
+
+        for(List<Action> a : actions){
+            for(int i = 0; i < a.size(); i++){
+                if(a.get(i).name == t){
+                    id = a.get(i).id;
+                    break;
+                }
+            }
+        }
         Intent newActivity = new Intent(TransactionActivity.this, TransactionDetailActivity.class);
         newActivity.putExtra("submenuName",txt);
+        newActivity.putExtra("id",id);
 //        newActivity.putExtra("MyClass", (Serializable) dao);
         startActivity(newActivity);
     }
