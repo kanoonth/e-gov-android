@@ -10,6 +10,7 @@ import android.widget.SearchView;
 import com.kanoon.egov.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class LocationActivity extends Activity implements SearchView.OnQueryTextListener {
@@ -25,11 +26,10 @@ public class LocationActivity extends Activity implements SearchView.OnQueryText
         setContentView(R.layout.activity_location);
         namePlace = new ArrayList<String>();
 
-        long id = 0;
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         if (extras != null) {
-            id = extras.getLong("id");
+            namePlace = Arrays.asList(extras.getStringArray("namePlace"));
         }
 
         search = (SearchView) findViewById(R.id.searchLocation);
