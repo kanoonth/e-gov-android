@@ -73,22 +73,6 @@ public class TransactionActivity extends Activity implements
     }
 
     public void createData(){
-//
-//        List<Category> categories = new ArrayList<Category>();
-//        Category c1 = new Category();
-//        Category c2 = new Category();
-//        categories.add(c1);
-//        categories.add(c2);
-//        DAO dao = new DAO();
-//        List<Category> categories = dao.getCategories(5);
-
-//        for (Category c: categories) {
-//            TransactionGroup group = new TransactionGroup(c.name);
-//            for (Action a: c.actions) {
-//                group.children.add(a.name);
-//
-//            }
-//        }
         List<Category> list = dao.getCategories(5);
         for (int i = 0; i < list.size(); i++) {
             TransactionGroup group = new TransactionGroup(list.get(i).name);

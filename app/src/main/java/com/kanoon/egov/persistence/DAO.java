@@ -52,7 +52,9 @@ public class DAO {
         for(int i=0;i<limitNumber;i++) {
             Category category = new Category();
             long categoryID = ca.getInt(ca.getColumnIndexOrThrow("id"));
+            String categoryName = ca.getString(ca.getColumnIndexOrThrow("name"));
             category.id = categoryID;
+            category.name = categoryName;
             categories.add(category);
             ca.moveToNext();
         }

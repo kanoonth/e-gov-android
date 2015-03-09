@@ -40,7 +40,7 @@
 
         <!--MainActivity-->
         <activity
-            android:name="com.kanoon.egov.activity.NearMapActivity"
+            android:name="com.kanoon.egov.activity.MainActivity"
             android:label="หน้าหลัก"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -94,11 +94,11 @@
         </activity>
 
         <!--Near Map-->
-        <!--<activity-->
-            <!--android:name="com.kanoon.egov.activity.NearMapActivity"-->
-            <!--android:label="สถานที่"-->
-            <!--android:screenOrientation="portrait">-->
-        <!--</activity>-->
+        <activity
+            android:name="com.kanoon.egov.activity.NearMapActivity"
+            android:label="สถานที่"
+            android:screenOrientation="portrait">
+        </activity>
 
         <!--Review page-->
         <activity
