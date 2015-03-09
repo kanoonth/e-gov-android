@@ -9,15 +9,19 @@ import android.widget.RatingBar;
 import android.widget.Toast;
 
 import com.kanoon.egov.R;
+import com.kanoon.egov.http.PostQueueRateTask;
 
 public class ReviewPageActivity extends Activity {
     private RatingBar ratingBar;
     private Button button;
+    private String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review_page);
+
+        id = getIntent().getStringExtra("id");
 
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
         ratingBar.setRating(3.0f);
@@ -27,9 +31,9 @@ public class ReviewPageActivity extends Activity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int rating = Math.round(ratingBar.getRating());
+                String rating = Math.round(ratingBar.getRating()) + "";
 
-                // implement post rating to server here
+                new PostQueueRateTask(id,rating);
 
                 finish();
 
