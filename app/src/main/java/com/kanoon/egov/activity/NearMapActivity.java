@@ -21,6 +21,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.kanoon.egov.R;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class NearMapActivity extends Activity {
+public class NearMapActivity extends Activity implements OnMarkerClickListener{
     GoogleMap mMap;
     Marker marker;
     private double latitude, longitude;
@@ -46,7 +47,6 @@ public class NearMapActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_near_maps);
-
         namePlace = new ArrayList<String>();
         lat = new ArrayList<String>();
         log = new ArrayList<String>();
@@ -96,6 +96,8 @@ public class NearMapActivity extends Activity {
         } catch (NullPointerException exception) {
             Log.e("mapApp", exception.toString());
         }
+
+        mMap.setOnMarkerClickListener(this);
     }
 
     /**
@@ -231,8 +233,23 @@ public class NearMapActivity extends Activity {
         Log.d("sss","!!!!!!!!Message"+latBound+"");
 // Set the camera to the greatest possible zoom level that includes the
 
-
-
     }
+
+    /**
+     * handle marker click event
+     */
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        LocationActivity.idPlace = marker.getId();
+        Intent newActivity = new Intent(NearMapActivity.this, TransactionDetailActivity.class);
+        newActivity.putExtra("selectedPlace",marker.getTitle());
+        startActivity(newActivity);
+//        if(marker.equals(marker_1)){
+//            Log.w("Click", "test");
+//            return true;
+//        }
+        return true;
+    }
+
 }
 
