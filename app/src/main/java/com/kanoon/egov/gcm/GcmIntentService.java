@@ -12,7 +12,7 @@ import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.kanoon.egov.R;
-import com.kanoon.egov.activity.MainActivity;
+import com.kanoon.egov.activity.ReviewPageActivity;
 
 /**
  * This {@code IntentService} does the actual handling of the GCM message.
@@ -78,7 +78,7 @@ public class GcmIntentService extends IntentService {
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
 
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, MainActivity.class), 0);
+                new Intent(this, ReviewPageActivity.class), 0);
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
