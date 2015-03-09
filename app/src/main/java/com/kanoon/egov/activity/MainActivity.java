@@ -15,12 +15,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.kanoon.egov.R;
+import com.kanoon.egov.http.GetQueneTask;
+import com.kanoon.egov.models.Category;
+import com.kanoon.egov.models.Queue;
 import com.kanoon.egov.persistence.Copy;
 import com.kanoon.egov.persistence.DAO;
 import com.kanoon.egov.persistence.Patcher;
@@ -39,27 +41,27 @@ public class MainActivity extends Activity {
     public static final String PROPERTY_REG_ID = "registration_id";
     private static final String PROPERTY_APP_VERSION = "appVersion";
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    public static String regid;
 
     /**
      * Substitute you own sender ID here. This is the project number you got
      * from the API Console, as described in "Getting Started."
      */
-    String SENDER_ID = "808312666693";
+    String SENDER_ID = "676930184861";
 
     /**
      * Tag used on log messages.
      */
     static final String TAG = "GCM Demo";
 
-    TextView mDisplay;
     GoogleCloudMessaging gcm;
     AtomicInteger msgId = new AtomicInteger();
     Context context;
 
-    String regid;
 
     private List<String> data;
     private DAO dao;
+    private ListAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -88,10 +90,13 @@ public class MainActivity extends Activity {
         Copy.exec();
         dao = DAO.getInstance();
         dao.setContent(this);
+
+        new GetQueneTask(this,regid).execute();
         data = new ArrayList<>();
-        fillData();
+
+
         final ListView lsHis = (ListView)findViewById(R.id.listHistory);
-        ListAdapter adapter = new ListAdapter(this, data);
+        adapter = new ListAdapter(this, data);
         lsHis.setAdapter(adapter);
         lsHis.setTextFilterEnabled(true);
 
@@ -115,6 +120,8 @@ public class MainActivity extends Activity {
                 startActivity(newActivity);
             }
         });
+
+
 
     }
 
@@ -140,12 +147,22 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public  void fillData() {
-        data.add("ทำบัตรประชาชน");
-        data.add("แจ้งเกิด");
-        for (int i = 1; i <= 4; i++) {
-            data.add("history " + i);
-        }
+    public  void fillData(List<Queue> queues) {
+       if(queues.size() != 0 ){
+           String name;
+           List<Category> list = dao.getCategories(5);
+           for(Queue q : queues){
+               for (int i = 0; i < list.size(); i++) {
+                   for (int j = 0; j < list.get(i).actions.size(); j++) {
+                       if(q.action_id == list.get(i).actions.get(j).id){
+                           name = list.get(i).actions.get(j).name;
+                           data.add(name);
+                       }
+                   }
+               }
+           }
+           adapter.notifyDataSetChanged();
+       }
     }
 
     @Override
@@ -235,11 +252,12 @@ public class MainActivity extends Activity {
                         gcm = GoogleCloudMessaging.getInstance(context);
                     }
                     regid = gcm.register(SENDER_ID);
+                    Log.d("regid",regid);
                     msg = "Device registered, registration ID=" + regid;
 
                     // You should send the registration ID to your server over HTTP, so it
                     // can use GCM/HTTP or CCS to send messages to your app.
-                    sendRegistrationIdToBackend();
+//                    sendRegistrationIdToBackend();
 
                     // For this demo: we don't need to send it because the device will send
                     // upstream messages to a server that echo back the message using the
@@ -258,7 +276,7 @@ public class MainActivity extends Activity {
 
             @Override
             protected void onPostExecute(String msg) {
-                mDisplay.append(msg + "\n");
+//                mDisplay.append(msg + "\n");
             }
         }.execute(null, null, null);
     }
@@ -284,7 +302,7 @@ public class MainActivity extends Activity {
 
             @Override
             protected void onPostExecute(String msg) {
-                mDisplay.append(msg + "\n");
+
             }
         }.execute(null, null, null);
     }
@@ -316,13 +334,5 @@ public class MainActivity extends Activity {
         // how you store the regID in your app is up to you.
         return getSharedPreferences(MainActivity.class.getSimpleName(),
                 Context.MODE_PRIVATE);
-    }
-    /**
-     * Sends the registration ID to your server over HTTP, so it can use GCM/HTTP or CCS to send
-     * messages to your app. Not needed for this demo since the device sends upstream messages
-     * to a server that echoes back the message using the 'from' address in the message.
-     */
-    private void sendRegistrationIdToBackend() {
-        // Your implementation here.
     }
 }

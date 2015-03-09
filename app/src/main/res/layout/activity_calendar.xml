@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/set_reserve_button"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"/>
 
         <Button
             android:id="@+id/set_reserve_button"
@@ -32,7 +32,8 @@
             android:layout_centerHorizontal="true"
             android:background="@drawable/button_custom"
             android:text="จอง"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:layout_margin="10dp"/>
 
     </LinearLayout>
 

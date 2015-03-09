@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TimePicker;
@@ -25,13 +26,14 @@ public class CalendarActivity extends FragmentActivity {
     private Date today;
     private TimePicker timePicker;
     private SimpleDateFormat formatter;
+    private String date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
 
-        formatter = new SimpleDateFormat("dd MMM yyyy");
+        formatter = new SimpleDateFormat("yyyy-MM-dd");
         caldroidFragment = new CaldroidFragment();
         today = new Date();
         selectedDate = today;
@@ -104,10 +106,14 @@ public class CalendarActivity extends FragmentActivity {
         caldroidFragment.setCaldroidListener(listener);
 
         timePicker = (TimePicker) findViewById(R.id.timePicker1);
+        timePicker.setIs24HourView(true);
+
         //Set Time for TimePicker
         Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int min = calendar.get(Calendar.MINUTE);
+        timePicker.setCurrentHour(hour);
+        timePicker.setCurrentMinute(min);
         showTime(hour, min);
 
         timePicker.setDescendantFocusability(TimePicker.FOCUS_BLOCK_DESCENDANTS);
@@ -118,6 +124,7 @@ public class CalendarActivity extends FragmentActivity {
             public void onClick(View v) {
                 setTime(v);
                 Intent newActivity = new Intent(CalendarActivity.this, ConfirmationActivity.class);
+                newActivity.putExtra("DateTime", date);
                 startActivity(newActivity);
             }
         });
@@ -143,23 +150,12 @@ public class CalendarActivity extends FragmentActivity {
     }
 
     public void showTime(int hour, int min) {
-        String format = "";
-        if (hour == 0) {
-            hour += 12;
-            format = "AM";
-        } else if (hour == 12) {
-            format = "PM";
-        } else if (hour > 12) {
-            hour -= 12;
-            format = "PM";
-        } else {
-            format = "AM";
-        }
+        String resultTime = (new StringBuilder().append(hour).append(":").append(min).append(":0")).toString();
 
-        String result = (new StringBuilder().append(hour).append(" : ").append(min)
-                .append(" ").append(format)).toString();
+        date = formatter.format(selectedDate)+","+resultTime;
 
-        Toast.makeText(getApplicationContext(),formatter.format(selectedDate)+" at "+result,Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getApplicationContext(),date,Toast.LENGTH_SHORT).show();
+        Log.v("calendarDate",date);
     }
 
 }

@@ -16,32 +16,27 @@ import java.util.List;
  * Created by Aof on 2/24/2015 AD.
  */
 public class TabLayoutActivity extends TabActivity {
-    private long id;
+
     private TabHost tabhost;
     private GetPlaceTask getPlaceTask;
     private List<Place> places;
     private List<String> namePlace;
     private List<String> lat;
     private List<String> log;
+    private List<String> idPlace;
 
     @Override
     public void onCreate(Bundle savedInstance){
         super.onCreate(savedInstance);
         setContentView(R.layout.activity_tab_controll);
 
-        id = 0;
-        Intent intentTemp = getIntent();
-        Bundle extras = intentTemp.getExtras();
-        if (extras != null) {
-            id = extras.getLong("id");
-        }
-
         places = new ArrayList<Place>();
         namePlace = new ArrayList<String>();
         lat = new ArrayList<String>();
         log = new ArrayList<String>();
+        idPlace = new ArrayList<String>();
 
-        getPlaceTask = new GetPlaceTask(this, id);
+        getPlaceTask = new GetPlaceTask(this, TransactionActivity.idMenu);
         getPlaceTask.execute();
 
 //        DAO dao = (DAO) intentTemp.getSerializableExtra("MyClass");
@@ -51,6 +46,7 @@ public class TabLayoutActivity extends TabActivity {
         this.places.addAll(places);
         for(Place p : places){
             namePlace.add(p.name);
+            idPlace.add(p.id +"");
             lat.add(p.latitude +"");
             log.add(p.longitude+"");
         }
@@ -66,8 +62,8 @@ public class TabLayoutActivity extends TabActivity {
 
         Intent intent;
         intent = new Intent(this, LocationActivity.class);
-        intent.putExtra("id",id);
         intent.putExtra("namePlace", namePlace.toArray(new String[0]));
+        intent.putExtra("idPlace", idPlace.toArray(new String[0]));
         spec = tabhost.newTabSpec("location").setIndicator("สถานที่").setContent(intent);
         tab1.setContent(new Intent(this,LocationActivity.class));
 

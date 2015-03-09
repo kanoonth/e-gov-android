@@ -134,8 +134,8 @@ public class Patcher {
      * @return true if success; false otherwise.
      */
     public boolean onReceiveData(List<Transaction> transactions) {
-        Log.d("Patcher", "size = " + transactions.size());
-
+//        Log.d("Patcher", "size = " + transactions.size());
+        if(transactions == null) return false;
         for (Transaction t: transactions) {
             if (!applyTransaction(t)) {
                 return false;

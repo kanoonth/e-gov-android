@@ -26,6 +26,9 @@ public class TransactionActivity extends Activity implements
     private ExpandableListView lsView;
     private TransactionExpandableListAdapter adapter;
     private DAO dao;
+
+    public static long idMenu;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,19 +123,17 @@ public class TransactionActivity extends Activity implements
 
     public void nextPage(String t){
         String txt = t;
-        long id=0;
 
         for(List<Action> a : actions){
             for(int i = 0; i < a.size(); i++){
                 if(a.get(i).name == t){
-                    id = a.get(i).id;
+                    idMenu = a.get(i).id;
                     break;
                 }
             }
         }
         Intent newActivity = new Intent(TransactionActivity.this, TransactionDetailActivity.class);
         newActivity.putExtra("submenuName",txt);
-        newActivity.putExtra("id",id);
 //        newActivity.putExtra("MyClass", (Serializable) dao);
         startActivity(newActivity);
     }

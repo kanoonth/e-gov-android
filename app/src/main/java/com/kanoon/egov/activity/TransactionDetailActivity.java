@@ -5,10 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -24,7 +21,7 @@ import java.util.List;
 public class TransactionDetailActivity extends Activity {
     private List<String> datas;
     private String actionName;
-    private long id;
+    private String selectedPlace;
     private DAO dao;
     private boolean isSelectPlace;
     @Override
@@ -32,22 +29,23 @@ public class TransactionDetailActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_detail);
 
+        selectedPlace = "";
         isSelectPlace = false;
         Intent intent = getIntent();
         dao = DAO.getInstance();
         Bundle extras = intent.getExtras();
         if (extras != null) {
             actionName = extras.getString("submenuName");
-            id = extras.getLong("id");
+            selectedPlace = extras.getString("selectedPlace");
         }
 
-        Log.v("sub menu name", actionName);
         datas = new ArrayList<String>();
         fillData();
 
         final ListView lsView = (ListView) findViewById(R.id.lsDetail);
         final Button placeBtn = (Button) findViewById(R.id.cPlaceBtn);
         final Button reserveBtn = (Button) findViewById(R.id.reserveBtn);
+
         ListAdapter adapter = new ListAdapter(this, datas);
         lsView.setAdapter(adapter);
         lsView.setTextFilterEnabled(true);
@@ -60,13 +58,18 @@ public class TransactionDetailActivity extends Activity {
             }
         });
 
+        if(selectedPlace != null){
+            isSelectPlace = true;
+            placeBtn.setText(selectedPlace);
+        }
+
         placeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 isSelectPlace = true;
                 reserveBtn.setBackgroundResource(R.drawable.button_custom);
+                reserveBtn.setEnabled(true);
                 Intent newActivity = new Intent(TransactionDetailActivity.this, TabLayoutActivity.class);
-                newActivity.putExtra("id",id);
                 startActivity(newActivity);
             }
         });
@@ -74,7 +77,7 @@ public class TransactionDetailActivity extends Activity {
 
         if(!isSelectPlace) {
             reserveBtn.setEnabled(false);
-            reserveBtn.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#B6B6B4")));
+            reserveBtn.setBackgroundResource(R.drawable.button_custom_grey);
         }
         reserveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,6 +86,8 @@ public class TransactionDetailActivity extends Activity {
                 startActivity(newActivity);
             }
         });
+
+
     }
 
     public void fillData() {
