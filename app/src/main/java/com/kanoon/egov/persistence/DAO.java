@@ -58,25 +58,31 @@ public class DAO {
             categories.add(category);
             ca.moveToNext();
         }
+
         Cursor c = db.rawQuery("SELECT Category.name as categoryName, Category.id as categoryId, Acsrr.name as actionName, Acsrr.id as actionId, Acsrr.description as actionDescription FROM Category, (SELECT * FROM Action where category_id IN ( SELECT id FROM Category LIMIT "+limitNumber+" )) as Acsrr Where Category.id = Acsrr.category_id;;", new String[0]);
         if(c.getCount() == 0) {
             // No data.
         } else {
+            int i = 0;
             while(true) {
                 c.moveToNext();
+
                 String name = c.getString(c.getColumnIndexOrThrow("actionName"));
                 String description = c.getString(c.getColumnIndexOrThrow("actionDescription"));
                 long actionId = c.getLong(c.getColumnIndexOrThrow("actionId"));
                 long categoryId = c.getLong(c.getColumnIndexOrThrow("categoryId"));
-                int i = 0; // i is the number that use to check from list of category to see it is same one or other one
+
                 Action action = new Action();
                 action.id = actionId;
                 action.description = description;
                 action.name = name;
+
                 if(categories.get(i).id!=categoryId){
                     i++;
                 }
+
                 categories.get(i).actions.add(action);
+
                 if(c.isLast()){
                     break;
                 }
