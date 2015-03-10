@@ -104,8 +104,8 @@ public class MainActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent newActivity = new Intent(MainActivity.this, CheckTransactionActivity.class);
-                //                newActivity.putExtra("MyClass", (Serializable) dao);
-//                newActivity.putExtra("MyClass", (Serializable) parse);
+                String actionName = lsHis.getItemAtPosition(position).toString();
+                newActivity.putExtra("actionName",actionName);
                 startActivity(newActivity);
             }
         });
@@ -115,13 +115,9 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent newActivity = new Intent(MainActivity.this, TransactionActivity.class);
-//                newActivity.putExtra("MyClass", (Serializable) dao);
-//                newActivity.putExtra("MyClass", (Serializable) parse);
                 startActivity(newActivity);
             }
         });
-
-
 
     }
 
@@ -207,6 +203,8 @@ public class MainActivity extends Activity {
         editor.putString(PROPERTY_REG_ID, regId);
         editor.putInt(PROPERTY_APP_VERSION, appVersion);
         editor.commit();
+        finish();
+        startActivity(getIntent());
     }
 
     /**

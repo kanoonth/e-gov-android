@@ -41,7 +41,7 @@
         <!--MainActivity-->
         <activity
             android:name="com.kanoon.egov.activity.MainActivity"
-            android:label="หน้าหลัก"
+            android:label="Ask Me"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

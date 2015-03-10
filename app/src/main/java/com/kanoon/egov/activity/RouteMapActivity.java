@@ -12,6 +12,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.kanoon.egov.R;
+import com.kanoon.egov.http.GetQueneTask;
+import com.kanoon.egov.http.GetQueuePlaceTask;
 
 public class RouteMapActivity extends Activity {
     GoogleMap mMap;
@@ -20,7 +22,8 @@ public class RouteMapActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_route_map);
         createMapView();
-        addMarker(new LatLng(13.851095, 100.567791),("Kaset"),("สาธิตเกษตร"));
+        String actionName = getIntent().getStringExtra("actionName");
+        new GetQueuePlaceTask(this,actionName,MainActivity.regid).execute();
     }
 
     private void createMapView() {
@@ -52,6 +55,6 @@ public class RouteMapActivity extends Activity {
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
 
         // Zoom in the Google Map
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(12));
     }
 }

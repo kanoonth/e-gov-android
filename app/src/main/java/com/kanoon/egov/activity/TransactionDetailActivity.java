@@ -6,12 +6,15 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.kanoon.egov.R;
+import com.kanoon.egov.models.Category;
 import com.kanoon.egov.models.Document;
 import com.kanoon.egov.persistence.DAO;
 
@@ -20,10 +23,11 @@ import java.util.List;
 
 public class TransactionDetailActivity extends Activity {
     private List<String> datas;
-    private String actionName;
+    private static String actionName;
     private String selectedPlace;
     private DAO dao;
     private boolean isSelectPlace;
+    private static String title;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,9 +39,18 @@ public class TransactionDetailActivity extends Activity {
         dao = DAO.getInstance();
         Bundle extras = intent.getExtras();
         if (extras != null) {
-            actionName = extras.getString("submenuName");
+            if ( extras.containsKey("submenuName") )
+                actionName = extras.getString("submenuName");
             selectedPlace = extras.getString("selectedPlace");
+            if ( actionName != null) {
+                Category category = dao.getCategoryByActionName(actionName);
+                title = category.name;
+            }
+
+            if ( !title.equals(actionName) && actionName != null) title += actionName;
         }
+
+        setTitle(title);
 
         datas = new ArrayList<String>();
         fillData();
@@ -54,6 +67,9 @@ public class TransactionDetailActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent newActivity = new Intent(TransactionDetailActivity.this, DocumentActivity.class);
+                String documentName = lsView.getItemAtPosition(position).toString();
+                Toast.makeText(getApplicationContext(),documentName,Toast.LENGTH_SHORT).show();
+                newActivity.putExtra("documentName",documentName);
                 startActivity(newActivity);
             }
         });
@@ -92,10 +108,11 @@ public class TransactionDetailActivity extends Activity {
 
     public void fillData() {
         List<Document> listDoc = dao.getDocument(actionName);
+
         if(listDoc.size() == 0){
             alertUpdate();
         }
-        else{
+        else {
             for (int i = 0; i < listDoc.size(); i++) {
                 datas.add(listDoc.get(i).name);
             }
@@ -108,14 +125,13 @@ public class TransactionDetailActivity extends Activity {
     public void alertUpdate() {
 
         new AlertDialog.Builder(TransactionDetailActivity.this)
-                .setTitle("UPDATE")
-                .setMessage("Update patcher")
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-
-                        dialog.cancel();
-                    }
-                }).show();
+            .setTitle("UPDATE")
+            .setMessage("Update patcher")
+            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.cancel();
+                }
+            }).show();
 
     }
 }

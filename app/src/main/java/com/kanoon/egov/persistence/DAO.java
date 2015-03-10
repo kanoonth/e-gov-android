@@ -52,7 +52,9 @@ public class DAO {
         for(int i=0;i<limitNumber;i++) {
             Category category = new Category();
             long categoryID = ca.getInt(ca.getColumnIndexOrThrow("id"));
+            String categoryName = ca.getString(ca.getColumnIndexOrThrow("name"));
             category.id = categoryID;
+            category.name = categoryName;
             categories.add(category);
             ca.moveToNext();
         }
@@ -83,27 +85,46 @@ public class DAO {
         return categories;
     }
 
-//    public List<Category> getCategories() {
-//        List<Category> categories = new ArrayList<Category>();
-//        SQLiteDatabase db = sqliteConnector.getReadableDatabase();
-//        Cursor c = db.rawQuery("SELECT name as categoryName, id as categoryId, (Acs.name) as actionName, Acs.id as actionId, (Acs.description) as actionDescription FROM Action,Category where Action.category_id = Action.id;", new String[0]);
-//        if (c.getCount() == 0) {
-//            // No data.
-//        } else {
-//            c.moveToFirst();
-//            Long code = c.getLong(c.getColumnIndexOrThrow(""));
-//
-//        }
-//    }
+    public Document getDocumentByName(String documentName) {
+        SQLiteDatabase db = sqliteConnector.getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM Document WHERE Document.name = \'" + documentName + "\';",new String[0]);
+
+        if (c.getCount() == 0) return null;
+
+        c.moveToFirst();
+        String name = c.getString(c.getColumnIndexOrThrow("name"));
+        String description = c.getString(c.getColumnIndexOrThrow("description"));
+        String photo_path = c.getString(c.getColumnIndexOrThrow("photo_path"));
+
+        Document document = new Document();
+        document.name = name;
+        document.description = description;
+        document.photo_path = photo_path;
+
+        return document;
+    }
+
+    public Category getCategoryByActionName(String actionName) {
+        SQLiteDatabase db = sqliteConnector.getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT Category.name as name FROM Category, Action WHERE Category.id = Action.category_id and Action.name = \'" + actionName + "\';",new String[0]);
+
+        if (c.getCount() == 0) return null;
+
+        c.moveToFirst();
+        String name = c.getString(c.getColumnIndexOrThrow("name"));
+
+        Category category = new Category();
+        category.name = name;
+
+        return category;
+    }
 
     public List<Document> getDocument(String actionName){
-//        Log.d("aaaaa",actionName);
         List<Document> listDocs = new ArrayList<Document>();
         SQLiteDatabase db = sqliteConnector.getReadableDatabase();
         Cursor c = db.rawQuery("SELECT Document.name as name,Document.photo_path as photo_path,Document.id as id, Document.description as description FROM Document,Action,Requirement " +
-                "Where Requirement.action_id == Action.id and Requirement.document_id == Document.id " +
-                ";",new String[0]);
-
+                "Where Requirement.action_id = Action.id and Requirement.document_id = Document.id and Action.name = \'" + actionName +
+                "\';",new String[0]);
 
         if(c.getCount() != 0){
             c.moveToFirst();

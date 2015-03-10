@@ -113,6 +113,7 @@ public class Patcher {
     }
 
     private boolean retrieveFile(String content) throws Exception {
+        if (content == "") return true;
         DownloadFileTask task = new DownloadFileTask(this, IMAGE_URL + content, content);
         task.execute();
         return true;

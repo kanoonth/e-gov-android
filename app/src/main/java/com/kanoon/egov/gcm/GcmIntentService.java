@@ -31,7 +31,7 @@ public class GcmIntentService extends IntentService {
     }
     public static final String TAG = "GCM Demo";
 
-    private int id;
+    private String id;
 
     @Override
     protected void onHandleIntent(Intent intent) {
@@ -39,8 +39,11 @@ public class GcmIntentService extends IntentService {
         GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
 
         if (!extras.isEmpty()) {
-           id = Integer.parseInt(extras.getString("id"));
+           id = extras.getString("id");
         }
+
+        Log.d("id",id);
+        sendNotification("โปรดให้คะแนนการบริการ");
         // Release the wake lock provided by the WakefulBroadcastReceiver.
         GcmBroadcastReceiver.completeWakefulIntent(intent);
     }
@@ -55,16 +58,16 @@ public class GcmIntentService extends IntentService {
 
         Intent review = new Intent(this, ReviewPageActivity.class);
         review.putExtra("id",id);
+        Log.d("id",id+"");
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, review, 0);
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.drawable.ic_stat_gcm)
-                        .setContentTitle("GCM Notification")
+                        .setContentTitle("Ask Me!")
                         .setStyle(new NotificationCompat.BigTextStyle()
                                 .bigText(msg))
                         .setContentText(msg);
-
         mBuilder.setContentIntent(contentIntent);
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
     }

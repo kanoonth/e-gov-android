@@ -3,6 +3,7 @@ package com.kanoon.egov.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RatingBar;
@@ -22,6 +23,8 @@ public class ReviewPageActivity extends Activity {
         setContentView(R.layout.activity_review_page);
 
         id = getIntent().getStringExtra("id");
+
+        Log.d("id",id+"");
 
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
         ratingBar.setRating(3.0f);

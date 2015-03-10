@@ -52,6 +52,7 @@ public class PostQueueTask extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String id) {
+        Log.d("id",id);
         super.onPostExecute(id);
         if(id != null){
             activity.setqId(id);

@@ -8,4 +8,8 @@ public class Document {
     public String name;
     public String description;
     public String photo_path;
+
+    public String getPhotoFileName() {
+        return this.photo_path.replace("/images/upload/","");
+    }
 }

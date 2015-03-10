@@ -8,8 +8,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.kanoon.egov.R;
+import com.kanoon.egov.models.Document;
+import com.kanoon.egov.persistence.DAO;
 
 public class DocumentActivity extends Activity{
     @Override
@@ -20,7 +23,12 @@ public class DocumentActivity extends Activity{
 //        DAO dao = (DAO) intent.getSerializableExtra("MyClass");
 
         ImageView imageView = (ImageView) findViewById(R.id.docImage);
-        imageView.setImageBitmap(BitmapFactory.decodeFile("/data/data/com.kanoon.egov/files/1_fRxsTiexGbnT.jpg"));
+        DAO dao = DAO.getInstance();
+        String documentName = getIntent().getStringExtra("documentName");
+        Document document = dao.getDocumentByName(documentName);
+        setTitle(document.name);
+//        Toast.makeText(getApplicationContext(),document.photo_path,Toast.LENGTH_SHORT).show();
+        imageView.setImageBitmap(BitmapFactory.decodeFile("/data/data/com.kanoon.egov/files/" + document.getPhotoFileName()));
 
         Button btn = (Button) findViewById(R.id.Docbtn);
         btn.setOnClickListener(new View.OnClickListener() {

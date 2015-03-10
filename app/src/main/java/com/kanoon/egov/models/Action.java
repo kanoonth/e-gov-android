@@ -7,4 +7,5 @@ public class Action {
     public long id;
     public String name;
     public String description;
+    public String categoryId;
 }

@@ -71,6 +71,7 @@ public class TabLayoutActivity extends TabActivity {
 
         intent = new Intent(this, NearMapActivity.class);
         intent.putExtra("namePlace", namePlace.toArray(new String[0]));
+        intent.putExtra("idPlace", idPlace.toArray(new String[0]));
         intent.putExtra("latitude", lat.toArray(new String[0]));
         intent.putExtra("longitude", log.toArray(new String[0]));
         spec = tabhost.newTabSpec("nearMap").setIndicator("Google Map").setContent(intent);

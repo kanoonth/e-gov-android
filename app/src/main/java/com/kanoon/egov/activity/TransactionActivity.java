@@ -6,6 +6,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ExpandableListView;
 import android.widget.SearchView;
 
@@ -132,9 +133,9 @@ public class TransactionActivity extends Activity implements
                 }
             }
         }
+
         Intent newActivity = new Intent(TransactionActivity.this, TransactionDetailActivity.class);
         newActivity.putExtra("submenuName",txt);
-//        newActivity.putExtra("MyClass", (Serializable) dao);
         startActivity(newActivity);
     }
 }
