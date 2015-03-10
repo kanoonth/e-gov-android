@@ -28,8 +28,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
 public class NearMapActivity extends Activity implements OnMarkerClickListener {
+
     GoogleMap mMap;
     Marker marker;
     private double latitude, longitude;
@@ -48,7 +48,6 @@ public class NearMapActivity extends Activity implements OnMarkerClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_near_maps);
-
         namePlace = new ArrayList<String>();
         lat = new ArrayList<String>();
         log = new ArrayList<String>();
@@ -94,6 +93,8 @@ public class NearMapActivity extends Activity implements OnMarkerClickListener {
         } catch (NullPointerException exception) {
             Log.e("mapApp", exception.toString());
         }
+
+        mMap.setOnMarkerClickListener(this);
     }
 
     /**
@@ -174,5 +175,6 @@ public class NearMapActivity extends Activity implements OnMarkerClickListener {
 //        Log.d("www","!Current"+latitude+" , "+longitude);
 //        Log.d("sss","!!!!!!!!Message"+latBound+"");
 //    }
+
 }
 

@@ -32,7 +32,6 @@ public class TransactionDetailActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_detail);
-
         selectedPlace = "";
         isSelectPlace = false;
         Intent intent = getIntent();
