@@ -76,6 +76,8 @@ public class MainActivity extends Activity {
             gcm = GoogleCloudMessaging.getInstance(this);
             regid = getRegistrationId(context);
 
+            Log.d("regid",regid);
+
             if (regid.isEmpty()) {
                 registerInBackground();
             } else {
@@ -85,6 +87,7 @@ public class MainActivity extends Activity {
             Log.i(TAG, "No valid Google Play Services APK found.");
         }
 
+
         Patcher patcher = new Patcher(getBaseContext());
         patcher.patch();
         Copy.exec();
@@ -93,7 +96,6 @@ public class MainActivity extends Activity {
 
         new GetQueneTask(this,regid).execute();
         data = new ArrayList<>();
-
 
         final ListView lsHis = (ListView)findViewById(R.id.listHistory);
         adapter = new ListAdapter(this, data);
@@ -203,8 +205,8 @@ public class MainActivity extends Activity {
         editor.putString(PROPERTY_REG_ID, regId);
         editor.putInt(PROPERTY_APP_VERSION, appVersion);
         editor.commit();
-        finish();
-        startActivity(getIntent());
+//        finish();
+//        startActivity(getIntent());
     }
 
     /**

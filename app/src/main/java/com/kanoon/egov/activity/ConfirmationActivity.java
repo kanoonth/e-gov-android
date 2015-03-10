@@ -6,9 +6,11 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.kanoon.egov.R;
 import com.kanoon.egov.http.PostQueueCodeTask;
@@ -20,6 +22,8 @@ public class ConfirmationActivity extends Activity{
     private String personalID;
     private String phone;
     private String date;
+    private static final int PHONE_NO_LENGTH = 8;
+    private static final int ID_NUMBER_LENGTH = 13;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,17 +36,43 @@ public class ConfirmationActivity extends Activity{
         }
 
         final EditText personal_id = (EditText) findViewById(R.id.personal_id_edit);
+        personal_id.setInputType(InputType.TYPE_CLASS_NUMBER);
+
         final EditText phone_EditText = (EditText) findViewById(R.id.telephone_edit);
+        phone_EditText.setInputType(InputType.TYPE_CLASS_PHONE);
 
         final Button confirmBtn = (Button) findViewById(R.id.confirmBtn);
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String alertData = "ข้อมูลไม่ถูกต้อง";
                 personalID = personal_id.getText().toString();
                 phone = phone_EditText.getText().toString();
-                new PostQueueTask(ConfirmationActivity.this,personalID,phone,date).execute();
+                if ( validateIdentificationNumber(personalID) && validatePhoneNumber(phone) )
+                    new PostQueueTask(ConfirmationActivity.this,personalID,phone,date).execute();
+                else
+                    Toast.makeText(getApplicationContext(),alertData,Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public boolean validatePhoneNumber(String phone) {
+        return isDigit(phone) && phone.trim().length() == PHONE_NO_LENGTH;
+    }
+
+    public boolean validateIdentificationNumber(String idNumber) {
+        return isDigit(idNumber) && idNumber.trim().length() == ID_NUMBER_LENGTH;
+    }
+
+    public static boolean isDigit(String str) {
+        if (str != null) { // <--- Add This
+            for (int i = 0; i < str.length(); i++) {
+                if (!Character.isDigit(str.charAt(i)))
+                    return false;
+            }
+            return true; // we only got here if there were characters, and they're all digit(s).
+        }
+        return false;
     }
 
     public void receiveQueueCode() {
@@ -51,8 +81,9 @@ public class ConfirmationActivity extends Activity{
         alert.setTitle("Queue Code");
         alert.setMessage("Please fill queue code");
 
-// Set an EditText view to get user input
+
         final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_NUMBER);
         alert.setView(input);
 
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
