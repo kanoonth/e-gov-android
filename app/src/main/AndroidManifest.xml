@@ -117,6 +117,7 @@
         <!--Transaction-->
         <activity
             android:name="com.kanoon.egov.activity.TransactionActivity"
+            android:windowSoftInputMode="stateHidden"
             android:label=""
             android:screenOrientation="portrait">
         </activity>
