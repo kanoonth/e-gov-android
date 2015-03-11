@@ -6,22 +6,36 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <ListView
-        android:id="@+id/listHistory"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight=".85"/>
+        android:layout_weight="0.05"
+        ></LinearLayout>
+
+    <ImageView
+        android:id="@+id/main_image_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:src="@drawable/big_text_1"
+        android:layout_weight="0.7" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.05"
+        ></LinearLayout>
 
     <Button
         android:id="@+id/startBtn"
         android:layout_width="match_parent"
-        android:maxWidth="100px"
         android:layout_height="0dp"
-        android:layout_weight=".15"
         android:text="เริ่มต้นใช้งาน"
         android:elevation="1dp"
+        android:layout_weight="0.2"
         android:textColor="@color/lb0"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_below="@+id/listHistory"/>
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true" />
 
 </LinearLayout>

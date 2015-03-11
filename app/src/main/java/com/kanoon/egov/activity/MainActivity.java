@@ -14,12 +14,13 @@ import android.transition.Explode;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ListView;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -27,13 +28,13 @@ import com.kanoon.egov.R;
 import com.kanoon.egov.http.GetQueneTask;
 import com.kanoon.egov.models.Category;
 import com.kanoon.egov.models.Queue;
-import com.kanoon.egov.persistence.Copy;
 import com.kanoon.egov.persistence.DAO;
 import com.kanoon.egov.persistence.Patcher;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -100,7 +101,8 @@ public class MainActivity extends Activity {
 
         Patcher patcher = new Patcher(getBaseContext());
         patcher.patch();
-        Copy.exec();
+//        Copy.exec();
+
         dao = DAO.getInstance();
         dao.setContent(this);
 
@@ -108,22 +110,26 @@ public class MainActivity extends Activity {
         data = new ArrayList<>();
         dataId = new ArrayList<>();
 
-        final ListView lsHis = (ListView)findViewById(R.id.listHistory);
-        adapter = new ListAdapter(this, data);
-        lsHis.setAdapter(adapter);
-        lsHis.setTextFilterEnabled(true);
 
-        lsHis.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent newActivity = new Intent(MainActivity.this, CheckTransactionActivity.class);
-                String actionName = lsHis.getItemAtPosition(position).toString();
-                String queueId = dataId.get(position);
-                newActivity.putExtra("actionName",actionName);
-                newActivity.putExtra("queueId",queueId);
-                startActivity(newActivity);
-            }
-        });
+//        final ListView lsHis = (ListView)findViewById(R.id.listHistory);
+//        adapter = new ListAdapter(this, data);
+//        lsHis.setAdapter(adapter);
+//        lsHis.setTextFilterEnabled(true);
+//
+//        lsHis.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Intent newActivity = new Intent(MainActivity.this, CheckTransactionActivity.class);
+//                String actionName = lsHis.getItemAtPosition(position).toString();
+//                String queueId = dataId.get(position);
+//                newActivity.putExtra("actionName",actionName);
+//                newActivity.putExtra("queueId",queueId);
+//                startActivity(newActivity);
+//            }
+//        });
+
+
+
 
         final Button startBtn = (Button) findViewById(R.id.startBtn);
         startBtn.setOnClickListener(new View.OnClickListener() {
@@ -142,6 +148,50 @@ public class MainActivity extends Activity {
             }
         });
 
+        View imageView = findViewById(R.id.main_image_view);
+
+        YoYo.with(Techniques.DropOut)
+                .duration(1400)
+                .playOn(imageView);
+
+        imageView.setOnTouchListener(new MyOnTouchListener(imageView));
+//        Timer timer = new Timer();
+//        timer.schedule(new MyTimerTask(imageView), 5000);
+
+
+    }
+
+    class MyOnTouchListener implements View.OnTouchListener {
+
+        private View view;
+
+        public MyOnTouchListener(View view) {
+            this.view = view;
+        }
+
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            YoYo.with(Techniques.DropOut)
+                    .duration(1400)
+                    .playOn(view);
+            return false;
+        }
+    }
+
+    class MyTimerTask extends TimerTask {
+
+        private View view;
+
+        public MyTimerTask(View view) {
+            this.view = view;
+        }
+
+        @Override
+        public void run() {
+            YoYo.with(Techniques.DropOut)
+                    .duration(1400)
+                    .playOn(view);
+        }
     }
 
     @Override
