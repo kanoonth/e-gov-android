@@ -55,12 +55,10 @@
     </LinearLayout>
 
     <Button
-        style="?android:attr/buttonStyleSmall"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:text="รายละเอียดเพิ่มเติม"
-        android:background="@drawable/button_custom"
-        android:textColor="@color/white"
+        android:textColor="@color/lb0"
         android:id="@+id/Docbtn"
         android:layout_weight=".1"/>
 </LinearLayout>

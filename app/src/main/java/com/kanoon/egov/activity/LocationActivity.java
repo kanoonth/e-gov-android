@@ -66,6 +66,7 @@ public class LocationActivity extends Activity implements SearchView.OnQueryText
         search.setIconifiedByDefault(false);
         search.setOnQueryTextListener(this);
         search.setSubmitButtonEnabled(false);
+        search.setFocusable(false);
     }
     @Override
     public boolean onQueryTextSubmit(String query) {

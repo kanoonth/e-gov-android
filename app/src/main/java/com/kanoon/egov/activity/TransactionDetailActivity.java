@@ -100,7 +100,7 @@ public class TransactionDetailActivity extends Activity {
             @Override
             public void onClick(View v) {
                 isSelectPlace = true;
-                reserveBtn.setBackgroundResource(R.drawable.button_custom);
+//                reserveBtn.setBackgroundResource(R.drawable.button_custom);
                 reserveBtn.setEnabled(true);
 
 

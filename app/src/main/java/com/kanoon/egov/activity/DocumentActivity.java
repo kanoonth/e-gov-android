@@ -25,7 +25,6 @@ public class DocumentActivity extends Activity{
             getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         }
         setContentView(R.layout.activity_document);
-        Intent intent = getIntent();
 
         ImageView imageView = (ImageView) findViewById(R.id.docImage);
         DAO dao = DAO.getInstance();

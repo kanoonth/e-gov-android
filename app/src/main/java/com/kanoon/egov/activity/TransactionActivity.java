@@ -39,10 +39,15 @@ public class TransactionActivity extends Activity implements
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         }
-
         setContentView(R.layout.activity_transaction);
-        Intent intent = getIntent();
+
         dao = DAO.getInstance();
+        actions = new ArrayList<List<Action>>();
+        groups = new ArrayList<TransactionGroup>();
+        createData();
+
+
+
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         search = (SearchView) findViewById(R.id.search);
@@ -51,10 +56,6 @@ public class TransactionActivity extends Activity implements
         search.setOnQueryTextListener(this);
         search.setOnCloseListener(this);
         search.setFocusable(false);
-
-
-        actions = new ArrayList<List<Action>>();
-        groups = new ArrayList<TransactionGroup>();
 
         //display the list
         displayList();
@@ -72,10 +73,6 @@ public class TransactionActivity extends Activity implements
 
     //method to expand all groups
     private void displayList() {
-
-        //display the list
-        createData();
-
         lsView = (ExpandableListView)findViewById(R.id.lsTransaction);
         adapter = new TransactionExpandableListAdapter(groups,this);
         lsView.setAdapter(adapter);

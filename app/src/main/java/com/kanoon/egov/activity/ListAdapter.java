@@ -51,7 +51,7 @@ public class ListAdapter extends BaseAdapter{
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            
+
         } else {
             view.setBackgroundResource(R.drawable.artists_list_backgroundcolor);
 
