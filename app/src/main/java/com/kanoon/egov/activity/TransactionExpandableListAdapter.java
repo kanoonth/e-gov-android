@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckedTextView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.kanoon.egov.R;
 
@@ -95,7 +94,6 @@ public class TransactionExpandableListAdapter extends BaseExpandableListAdapter{
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(transaction.getApplicationContext(),children,Toast.LENGTH_SHORT).show();
                 transaction.nextPage(children);
             }
         });
