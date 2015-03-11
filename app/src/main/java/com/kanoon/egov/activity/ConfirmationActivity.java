@@ -3,10 +3,13 @@ package com.kanoon.egov.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,7 +25,7 @@ public class ConfirmationActivity extends Activity{
     private String personalID;
     private String phone;
     private String date;
-    private static final int PHONE_NO_LENGTH = 8;
+    private static final int PHONE_NO_LENGTH = 10;
     private static final int ID_NUMBER_LENGTH = 13;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,12 @@ public class ConfirmationActivity extends Activity{
                 String alertData = "ข้อมูลไม่ถูกต้อง";
                 personalID = personal_id.getText().toString();
                 phone = phone_EditText.getText().toString();
+                if ( MainActivity.regid == null || MainActivity.regid == "") {
+                    final SharedPreferences prefs = getSharedPreferences(MainActivity.class.getSimpleName(), Context.MODE_PRIVATE);
+                    String registrationId = prefs.getString("registration_id", "");
+                    MainActivity.regid = registrationId;
+                }
+                Log.w("regid",MainActivity.regid);
                 if ( validateIdentificationNumber(personalID) && validatePhoneNumber(phone) )
                     new PostQueueTask(ConfirmationActivity.this,personalID,phone,date).execute();
                 else
