@@ -22,8 +22,8 @@ public class RouteMapActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_route_map);
         createMapView();
-        String actionName = getIntent().getStringExtra("actionName");
-        new GetQueuePlaceTask(this,actionName,MainActivity.regid).execute();
+        String queueId = getIntent().getStringExtra("queueId");
+        new GetQueuePlaceTask(this,queueId).execute();
     }
 
     private void createMapView() {
@@ -50,7 +50,7 @@ public class RouteMapActivity extends Activity {
         }
     }
 
-    private void addMarker(LatLng latLng,String nameOfPlace,String detail){
+    public void addMarker(LatLng latLng,String nameOfPlace,String detail){
         Marker markerPlace = mMap.addMarker(new MarkerOptions().position(latLng).title(nameOfPlace).snippet(detail));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
 

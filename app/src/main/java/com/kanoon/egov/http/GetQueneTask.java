@@ -30,8 +30,8 @@ public class GetQueneTask extends AsyncTask<Void, Void, List<Queue>> {
             RestTemplate rest = new RestTemplate();
             rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 
-            Queue[] quenes = rest.getForObject(url, Queue[].class);
-            return new ArrayList<Queue>(Arrays.asList(quenes));
+            Queue[] queues = rest.getForObject(url, Queue[].class);
+            return new ArrayList<Queue>(Arrays.asList(queues));
 
         } catch (Exception e) {
             Log.e("GetTransactionTask", e.getMessage(), e);

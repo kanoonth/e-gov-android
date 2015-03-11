@@ -60,6 +60,7 @@ public class MainActivity extends Activity {
 
 
     private List<String> data;
+    private List<String> dataId;
     private DAO dao;
     private ListAdapter adapter;
 
@@ -69,6 +70,7 @@ public class MainActivity extends Activity {
 
         setContentView(R.layout.activity_main);
 
+        setTitle("หน้าหลัก");
         context = getApplicationContext();
 
         // Check device for Play Services APK. If check succeeds, proceed with GCM registration.
@@ -96,6 +98,7 @@ public class MainActivity extends Activity {
 
         new GetQueneTask(this,regid).execute();
         data = new ArrayList<>();
+        dataId = new ArrayList<>();
 
         final ListView lsHis = (ListView)findViewById(R.id.listHistory);
         adapter = new ListAdapter(this, data);
@@ -107,7 +110,9 @@ public class MainActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent newActivity = new Intent(MainActivity.this, CheckTransactionActivity.class);
                 String actionName = lsHis.getItemAtPosition(position).toString();
+                String queueId = dataId.get(position);
                 newActivity.putExtra("actionName",actionName);
+                newActivity.putExtra("queueId",queueId);
                 startActivity(newActivity);
             }
         });
@@ -147,14 +152,16 @@ public class MainActivity extends Activity {
 
     public  void fillData(List<Queue> queues) {
        if(queues.size() != 0 ){
-           String name;
+           String name, id;
            List<Category> list = dao.getCategories(5);
            for(Queue q : queues){
                for (int i = 0; i < list.size(); i++) {
                    for (int j = 0; j < list.get(i).actions.size(); j++) {
                        if(q.action_id == list.get(i).actions.get(j).id){
                            name = list.get(i).actions.get(j).name;
+                           id = q.queue_id + "";
                            data.add(name);
+                           dataId.add(id);
                        }
                    }
                }

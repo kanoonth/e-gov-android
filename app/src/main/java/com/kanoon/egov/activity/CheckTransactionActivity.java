@@ -16,6 +16,7 @@ import java.util.List;
 
 public class CheckTransactionActivity extends Activity {
     private String actionName;
+    private String queueId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +24,8 @@ public class CheckTransactionActivity extends Activity {
         setContentView(R.layout.activity_check_transaction);
 
         actionName = getIntent().getStringExtra("actionName");
+        queueId = getIntent().getStringExtra("queueId");
+
         List<Document> documents = DAO.getInstance().getDocument(actionName);
         final ListView ls = (ListView) findViewById(R.id.listCheckTran);
         String[] data = new String[documents.size()];
@@ -40,6 +43,7 @@ public class CheckTransactionActivity extends Activity {
             public void onClick(View v) {
                 Intent newActivity = new Intent(CheckTransactionActivity.this, RouteMapActivity.class);
                 newActivity.putExtra("actionName",actionName);
+                newActivity.putExtra("queueId",queueId);
                 startActivity(newActivity);
             }
         });

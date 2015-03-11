@@ -10,5 +10,4 @@ public class Place {
     public String full_address;
     public float latitude;
     public float longitude;
-
 }

@@ -3,11 +3,13 @@ package com.kanoon.egov.http;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.kanoon.egov.activity.ConfirmationActivity;
 import com.kanoon.egov.activity.LocationActivity;
 import com.kanoon.egov.activity.MainActivity;
 import com.kanoon.egov.activity.RouteMapActivity;
 import com.kanoon.egov.activity.TransactionActivity;
+import com.kanoon.egov.models.Place;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -15,8 +17,12 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by suwijakchaipipat on 3/10/2015 AD.
@@ -25,33 +31,35 @@ public class GetQueuePlaceTask extends AsyncTask<String, Void, String> {
 
     private String url;
     private RouteMapActivity activity;
+    private Place place;
 
-    public GetQueuePlaceTask(RouteMapActivity activity, String actionName, String reg_id){
-        this.url = "http://128.199.85.120/api/v1/queue/action?name=" + actionName + "&reg_id=" + reg_id;
+    public GetQueuePlaceTask(RouteMapActivity activity, String queueId){
+        this.url = "http://128.199.85.120/api/v1/queue/" + queueId + "/place";
         this.activity = activity;
     }
 
     @Override
     protected String doInBackground(String... params) {
-        String text = null;
-        HttpClient httpclient = new DefaultHttpClient();
-        HttpPost httppost = new HttpPost(url);
-        HttpResponse resp = null;
         try {
-            resp = httpclient.execute(httppost);
-            HttpEntity ent = resp.getEntity();
-            text = EntityUtils.toString(ent);
-        } catch (IOException e) {
-            e.printStackTrace();
+            RestTemplate rest = new RestTemplate();
+            rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+
+            Log.v("url",url);
+
+            Place[] places = rest.getForObject(url, Place[].class);
+
+            place = places[0];
+
+            } catch (Exception e) {
+            Log.e("GetPlaceTask", e.getMessage(), e);
         }
 
-        //TODO update RouteMapActivity to addMarker on place
-
-        return text;
+        return null;
     }
 
     @Override
     protected void onPostExecute(String id) {
+        this.activity.addMarker(new LatLng(place.latitude,place.longitude),place.name,"");
         super.onPostExecute(id);
     }
 }
