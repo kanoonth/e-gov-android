@@ -48,7 +48,9 @@ public class ConfirmationActivity extends Activity{
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String alertData = "ข้อมูลไม่ถูกต้อง";
+                String alertIdData = "เลขบัตรประจำตัวประชาชนไม่ถูกต้อง";
+                String alertPhoneData = "หมายเลขโทรศัพท์ไม่ถูกต้อง";
+                String alertEmptyData = "โปรดใส่ข้อมูล";
                 personalID = personal_id.getText().toString();
                 phone = phone_EditText.getText().toString();
                 if ( MainActivity.regid == null || MainActivity.regid == "") {
@@ -57,10 +59,15 @@ public class ConfirmationActivity extends Activity{
                     MainActivity.regid = registrationId;
                 }
                 Log.w("regid",MainActivity.regid);
-                if ( validateIdentificationNumber(personalID) && validatePhoneNumber(phone) )
-                    new PostQueueTask(ConfirmationActivity.this,personalID,phone,date).execute();
+                if ( personal_id.equals("") && phone.equals("") )
+                    Toast.makeText(getApplicationContext(),alertEmptyData,Toast.LENGTH_SHORT).show();
+                else if ( !validateIdentificationNumber(personalID))
+                    Toast.makeText(getApplicationContext(),alertIdData,Toast.LENGTH_SHORT).show();
+                else if ( !validatePhoneNumber(phone) )
+                    Toast.makeText(getApplicationContext(),alertPhoneData,Toast.LENGTH_SHORT).show();
                 else
-                    Toast.makeText(getApplicationContext(),alertData,Toast.LENGTH_SHORT).show();
+                    new PostQueueTask(ConfirmationActivity.this,personalID,phone,date).execute();
+
             }
         });
     }
@@ -70,7 +77,24 @@ public class ConfirmationActivity extends Activity{
     }
 
     public boolean validateIdentificationNumber(String idNumber) {
-        return isDigit(idNumber) && idNumber.trim().length() == ID_NUMBER_LENGTH;
+        if ( !isDigit(idNumber) ) return false;
+        if ( !(idNumber.trim().length() == ID_NUMBER_LENGTH ) )
+            return false;
+        Long id = Long.parseLong(idNumber.substring(0,12));
+        Log.w("idNum",id+"");
+        long base = 100000000000l;
+        int basenow;
+        int sum = 0;
+        for ( int i = 13 ; i > 1 ; i-- ) {
+            basenow = (int)Math.floor(id/base);
+            id = id - basenow*base;
+            sum += basenow*i;
+            base = base/10;
+        }
+        String checkbit = ( 11 - ( sum % 11 ) ) % 10 + "";
+        Log.w("lastDigit",idNumber.charAt(12)+ "");
+        Log.w("checkbit",checkbit);
+        return checkbit.equals(idNumber.charAt(12) + "");
     }
 
     public static boolean isDigit(String str) {
@@ -87,8 +111,8 @@ public class ConfirmationActivity extends Activity{
     public void receiveQueueCode() {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-        alert.setTitle("Queue Code");
-        alert.setMessage("Please fill queue code");
+        alert.setTitle("โปรดใส่รหัสยืนยัน");
+        alert.setMessage("ท่านจะได้รับรหัสยืนยันทาง SMS");
 
 
         final EditText input = new EditText(this);

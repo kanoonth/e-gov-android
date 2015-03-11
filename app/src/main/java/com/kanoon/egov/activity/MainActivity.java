@@ -70,7 +70,7 @@ public class MainActivity extends Activity {
 
         setContentView(R.layout.activity_main);
 
-        setTitle("หน้าหลัก");
+        setTitle("ประวัติการจองคิว");
         context = getApplicationContext();
 
         // Check device for Play Services APK. If check succeeds, proceed with GCM registration.
