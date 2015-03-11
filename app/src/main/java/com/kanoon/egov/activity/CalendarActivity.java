@@ -1,19 +1,22 @@
 package com.kanoon.egov.activity;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.transition.Explode;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
+import com.kanoon.egov.R;
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
-import com.kanoon.egov.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -31,6 +34,9 @@ public class CalendarActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        }
         setContentView(R.layout.activity_calendar);
 
         formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -70,8 +76,8 @@ public class CalendarActivity extends FragmentActivity {
                     else
                         caldroidFragment.setBackgroundResourceForDate(R.color.white, selectedDate);
                 }
-                Toast.makeText(getApplicationContext(), formatter.format(date),
-                        Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), formatter.format(date),
+//                        Toast.LENGTH_SHORT).show();
                 caldroidFragment.setBackgroundResourceForDate(R.color.blue, date);
                 caldroidFragment.refreshView();
                 selectedDate = date;
@@ -80,8 +86,8 @@ public class CalendarActivity extends FragmentActivity {
             @Override
             public void onChangeMonth(int month, int year) {
                 String text = "month: " + month + " year: " + year;
-                Toast.makeText(getApplicationContext(), text,
-                        Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), text,
+//                        Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -123,9 +129,22 @@ public class CalendarActivity extends FragmentActivity {
             @Override
             public void onClick(View v) {
                 setTime(v);
-                Intent newActivity = new Intent(CalendarActivity.this, ConfirmationActivity.class);
-                newActivity.putExtra("DateTime", date);
-                startActivity(newActivity);
+
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    getWindow().setExitTransition(new Explode());
+                    Intent intent = new Intent(CalendarActivity.this, ConfirmationActivity.class);
+                    intent.putExtra("DateTime", date);
+                    startActivity(intent, ActivityOptions
+                            .makeSceneTransitionAnimation(CalendarActivity.this).toBundle());
+                } else {
+                    Intent newActivity = new Intent(CalendarActivity.this, ConfirmationActivity.class);
+                    newActivity.putExtra("DateTime", date);
+                    startActivity(newActivity);
+                }
+
+
+
             }
         });
     }

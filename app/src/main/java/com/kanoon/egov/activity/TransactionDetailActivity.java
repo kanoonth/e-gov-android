@@ -2,16 +2,19 @@ package com.kanoon.egov.activity;
 
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.transition.Explode;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.kanoon.egov.R;
 import com.kanoon.egov.models.Category;
@@ -31,6 +34,9 @@ public class TransactionDetailActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        }
         setContentView(R.layout.activity_transaction_detail);
         selectedPlace = "";
         isSelectPlace = false;
@@ -65,11 +71,23 @@ public class TransactionDetailActivity extends Activity {
         lsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent newActivity = new Intent(TransactionDetailActivity.this, DocumentActivity.class);
+
                 String documentName = lsView.getItemAtPosition(position).toString();
-                Toast.makeText(getApplicationContext(),documentName,Toast.LENGTH_SHORT).show();
-                newActivity.putExtra("documentName",documentName);
-                startActivity(newActivity);
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    getWindow().setExitTransition(new Explode());
+                    Intent intent = new Intent(TransactionDetailActivity.this, DocumentActivity.class);
+                    intent.putExtra("documentName", documentName);
+                    startActivity(intent, ActivityOptions
+                            .makeSceneTransitionAnimation(TransactionDetailActivity.this).toBundle());
+                } else {
+                    Intent newActivity = new Intent(TransactionDetailActivity.this, DocumentActivity.class);
+                    newActivity.putExtra("documentName",documentName);
+                    startActivity(newActivity);
+                }
+
+
+
             }
         });
 
@@ -84,8 +102,18 @@ public class TransactionDetailActivity extends Activity {
                 isSelectPlace = true;
                 reserveBtn.setBackgroundResource(R.drawable.button_custom);
                 reserveBtn.setEnabled(true);
-                Intent newActivity = new Intent(TransactionDetailActivity.this, TabLayoutActivity.class);
-                startActivity(newActivity);
+
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    getWindow().setExitTransition(new Explode());
+                    Intent intent = new Intent(TransactionDetailActivity.this, TabLayoutActivity.class);
+                    startActivity(intent, ActivityOptions
+                            .makeSceneTransitionAnimation(TransactionDetailActivity.this).toBundle());
+                } else {
+                    Intent newActivity = new Intent(TransactionDetailActivity.this, TabLayoutActivity.class);
+                    startActivity(newActivity);
+                }
+
             }
         });
 
@@ -97,8 +125,17 @@ public class TransactionDetailActivity extends Activity {
         reserveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent newActivity = new Intent(TransactionDetailActivity.this, CalendarActivity.class);
-                startActivity(newActivity);
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    getWindow().setExitTransition(new Explode());
+                    Intent intent = new Intent(TransactionDetailActivity.this, CalendarActivity.class);
+                    startActivity(intent, ActivityOptions
+                            .makeSceneTransitionAnimation(TransactionDetailActivity.this).toBundle());
+                } else {
+                    Intent newActivity = new Intent(TransactionDetailActivity.this, CalendarActivity.class);
+                    startActivity(newActivity);
+                }
+
             }
         });
 
@@ -109,7 +146,8 @@ public class TransactionDetailActivity extends Activity {
         List<Document> listDoc = dao.getDocument(actionName);
 
         if(listDoc.size() == 0){
-            alertUpdate();
+//            alertUpdate();
+            Log.d(this.getClass().toString(), "No document.");
         }
         else {
             for (int i = 0; i < listDoc.size(); i++) {

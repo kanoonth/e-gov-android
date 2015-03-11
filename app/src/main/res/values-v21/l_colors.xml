@@ -1,0 +1,13 @@
+<resources>
+    <color name="lb0">#FFFFFF</color>
+    <color name="lb50">#E1F5FE</color>
+    <color name="lb100">#B3E5FC</color>
+    <color name="lb200">#81D4FA</color>
+    <color name="lb300">#4FC3F7</color>
+    <color name="lb400">#29B6F6</color>
+    <color name="lb500">#03A9F4</color>
+    <color name="lb600">#039BE5</color>
+    <color name="lb700">#0288D1</color>
+    <color name="lb800">#0277BD</color>
+    <color name="lb900">#01579B</color>
+</resources>

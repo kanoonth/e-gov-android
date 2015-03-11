@@ -2,7 +2,9 @@ package com.kanoon.egov.activity;
 
 import android.app.TabActivity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.Window;
 import android.widget.TabHost;
 
 import com.kanoon.egov.R;
@@ -28,6 +30,9 @@ public class TabLayoutActivity extends TabActivity {
     @Override
     public void onCreate(Bundle savedInstance){
         super.onCreate(savedInstance);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        }
         setContentView(R.layout.activity_tab_controll);
 
         places = new ArrayList<Place>();

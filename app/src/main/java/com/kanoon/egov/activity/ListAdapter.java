@@ -1,6 +1,7 @@
 package com.kanoon.egov.activity;
 
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +49,14 @@ public class ListAdapter extends BaseAdapter{
         if (view == null) {
             view = lInflater.inflate(R.layout.list_row, parent, false);
         }
-        view.setBackgroundResource(R.drawable.artists_list_backgroundcolor);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            
+        } else {
+            view.setBackgroundResource(R.drawable.artists_list_backgroundcolor);
+
+        }
+
 
         ((TextView) view.findViewById(R.id.lsText)).setText(data.get(position));
         return view;

@@ -1,17 +1,21 @@
 package com.kanoon.egov.activity;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.transition.Explode;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
@@ -68,9 +72,13 @@ public class MainActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        }
+
         setContentView(R.layout.activity_main);
 
-        setTitle("ประวัติการจองคิว");
+//        setTitle("ประวัติการจองคิว");
         context = getApplicationContext();
 
         // Check device for Play Services APK. If check succeeds, proceed with GCM registration.
@@ -121,8 +129,16 @@ public class MainActivity extends Activity {
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent newActivity = new Intent(MainActivity.this, TransactionActivity.class);
-                startActivity(newActivity);
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    getWindow().setExitTransition(new Explode());
+                    Intent intent = new Intent(MainActivity.this, TransactionActivity.class);
+                    startActivity(intent, ActivityOptions
+                          .makeSceneTransitionAnimation(MainActivity.this).toBundle());
+                } else {
+                    Intent newActivity = new Intent(MainActivity.this, TransactionActivity.class);
+                    startActivity(newActivity);
+                }
             }
         });
 

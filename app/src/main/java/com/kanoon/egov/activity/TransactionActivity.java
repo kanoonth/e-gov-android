@@ -2,11 +2,14 @@ package com.kanoon.egov.activity;
 
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
+import android.transition.Explode;
+import android.view.Window;
 import android.widget.ExpandableListView;
 import android.widget.SearchView;
 
@@ -33,6 +36,10 @@ public class TransactionActivity extends Activity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        }
+
         setContentView(R.layout.activity_transaction);
         Intent intent = getIntent();
         dao = DAO.getInstance();
@@ -43,6 +50,8 @@ public class TransactionActivity extends Activity implements
         search.setIconifiedByDefault(false);
         search.setOnQueryTextListener(this);
         search.setOnCloseListener(this);
+        search.setFocusable(false);
+
 
         actions = new ArrayList<List<Action>>();
         groups = new ArrayList<TransactionGroup>();
@@ -118,8 +127,18 @@ public class TransactionActivity extends Activity implements
             }
         }
 
-        Intent newActivity = new Intent(TransactionActivity.this, TransactionDetailActivity.class);
-        newActivity.putExtra("submenuName",txt);
-        startActivity(newActivity);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setExitTransition(new Explode());
+            Intent intent = new Intent(TransactionActivity.this, TransactionDetailActivity.class);
+            intent.putExtra("submenuName",txt);
+            startActivity(intent, ActivityOptions
+                    .makeSceneTransitionAnimation(TransactionActivity.this).toBundle());
+        } else {
+            Intent newActivity = new Intent(TransactionActivity.this, TransactionDetailActivity.class);
+            newActivity.putExtra("submenuName",txt);
+            startActivity(newActivity);
+        }
+
+
     }
 }

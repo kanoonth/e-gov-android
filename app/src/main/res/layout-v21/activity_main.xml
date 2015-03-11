@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ListView
+        android:id="@+id/listHistory"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".85"/>
+
+    <Button
+        android:id="@+id/startBtn"
+        android:layout_width="match_parent"
+        android:maxWidth="100px"
+        android:layout_height="0dp"
+        android:layout_weight=".15"
+        android:text="เริ่มต้นใช้งาน"
+        android:elevation="1dp"
+        android:textColor="@color/lb0"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_below="@+id/listHistory"/>
+
+</LinearLayout>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ListView
+        android:id="@+id/lsDetail"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_weight=".7">
+    </ListView>
+
+    <Button
+        android:id="@+id/cPlaceBtn"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".15"
+        android:text="เลือกสถานที่"
+        android:elevation="1dp"
+        android:textColor="@color/lb0"
+        android:layout_below="@+id/lsDetail"/>
+
+    <Button
+        android:id="@+id/reserveBtn"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".15"
+        android:text="เลือกวันและเวลา"
+        android:elevation="1dp"
+        android:textColor="@color/lb0"
+        android:layout_below="@+id/cPlaceBtn"/>
+
+</LinearLayout>

@@ -2,15 +2,19 @@ package com.kanoon.egov.activity;
 
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
+import android.transition.Explode;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -30,6 +34,9 @@ public class ConfirmationActivity extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        }
         setContentView(R.layout.activity_confirmation);
 
         Intent intent = getIntent();
@@ -136,8 +143,16 @@ public class ConfirmationActivity extends Activity{
     }
 
     public void nextPage(){
-        Intent newActivity = new Intent(ConfirmationActivity.this, MainActivity.class);
-        startActivity(newActivity);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setExitTransition(new Explode());
+            Intent intent = new Intent(ConfirmationActivity.this, MainActivity.class);
+            startActivity(intent, ActivityOptions
+                    .makeSceneTransitionAnimation(ConfirmationActivity.this).toBundle());
+        } else {
+            Intent newActivity = new Intent(ConfirmationActivity.this, MainActivity.class);
+            startActivity(newActivity);
+        }
+
     }
 
     public void alertInvalid() {
