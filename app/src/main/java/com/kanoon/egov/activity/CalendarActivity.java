@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.transition.Explode;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -40,9 +39,64 @@ public class CalendarActivity extends FragmentActivity {
         setContentView(R.layout.activity_calendar);
 
         formatter = new SimpleDateFormat("yyyy-MM-dd");
-        caldroidFragment = new CaldroidFragment();
         today = new Date();
         selectedDate = today;
+
+        createCaldroid(savedInstanceState);
+        createCaldroidListener();
+        caldroidFragment.setCaldroidListener( createCaldroidListener());
+
+
+        timePicker = (TimePicker) findViewById(R.id.timePicker1);
+        timePicker.setIs24HourView(true);
+
+        //Set Time for TimePicker
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int min = calendar.get(Calendar.MINUTE);
+
+        timePicker.setCurrentHour(hour);
+        timePicker.setCurrentMinute(min);
+        setDate(hour, min);
+
+        timePicker.setDescendantFocusability(TimePicker.FOCUS_BLOCK_DESCENDANTS);
+
+        final Button resBtn = (Button) findViewById(R.id.set_reserve_button);
+        resBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setTime(v);
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    getWindow().setExitTransition(new Explode());
+                    Intent intent = new Intent(CalendarActivity.this, ConfirmationActivity.class);
+                    intent.putExtra("DateTime", date);
+                    startActivity(intent, ActivityOptions
+                            .makeSceneTransitionAnimation(CalendarActivity.this).toBundle());
+                } else {
+                    Intent newActivity = new Intent(CalendarActivity.this, ConfirmationActivity.class);
+                    newActivity.putExtra("DateTime", date);
+                    startActivity(newActivity);
+                }
+            }
+        });
+    }
+
+    /**
+     * Save current states of the Caldroid here
+     */
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        if (caldroidFragment != null) {
+            caldroidFragment.saveStatesToKey(outState, "CALDROID_SAVED_STATE");
+        }
+    }
+
+    public void createCaldroid(Bundle savedInstanceState){
+        caldroidFragment = new CaldroidFragment();
+
         // If Activity is created after rotation
         if (savedInstanceState != null) {
             caldroidFragment.restoreStatesFromKey(savedInstanceState,
@@ -60,120 +114,39 @@ public class CalendarActivity extends FragmentActivity {
             caldroidFragment.setArguments(args);
         }
 
-        // Attach to the activity
         FragmentTransaction t = getSupportFragmentManager().beginTransaction();
         t.replace(R.id.calendar1, caldroidFragment);
         t.commit();
-
-        // Setup listener
-        final CaldroidListener listener = new CaldroidListener() {
-
-            @Override
-            public void onSelectDate(Date date, View view) {
-                if(selectedDate != null){
-                    if(selectedDate.getDate() == today.getDate())
-                        caldroidFragment.setBackgroundResourceForDate(com.caldroid.R.drawable.red_border,selectedDate);
-                    else
-                        caldroidFragment.setBackgroundResourceForDate(R.color.white, selectedDate);
-                }
-//                Toast.makeText(getApplicationContext(), formatter.format(date),
-//                        Toast.LENGTH_SHORT).show();
-                caldroidFragment.setBackgroundResourceForDate(R.color.blue, date);
-                caldroidFragment.refreshView();
-                selectedDate = date;
-            }
-
-            @Override
-            public void onChangeMonth(int month, int year) {
-                String text = "month: " + month + " year: " + year;
-//                Toast.makeText(getApplicationContext(), text,
-//                        Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onLongClickDate(Date date, View view) {
-//                Toast.makeText(getApplicationContext(),
-//                        "Long click " + formatter.format(date),
-//                        Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onCaldroidViewCreated() {
-                if (caldroidFragment.getLeftArrowButton() != null) {
-//                    Toast.makeText(getApplicationContext(),
-//                            "Caldroid view is created", Toast.LENGTH_SHORT)
-//                            .show();
-                }
-            }
-
-        };
-
-        // Setup Caldroid
-        caldroidFragment.setCaldroidListener(listener);
-
-        timePicker = (TimePicker) findViewById(R.id.timePicker1);
-        timePicker.setIs24HourView(true);
-
-        //Set Time for TimePicker
-        Calendar calendar = Calendar.getInstance();
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int min = calendar.get(Calendar.MINUTE);
-        timePicker.setCurrentHour(hour);
-        timePicker.setCurrentMinute(min);
-        showTime(hour, min);
-
-        timePicker.setDescendantFocusability(TimePicker.FOCUS_BLOCK_DESCENDANTS);
-
-        final Button resBtn = (Button) findViewById(R.id.set_reserve_button);
-        resBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setTime(v);
-
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    getWindow().setExitTransition(new Explode());
-                    Intent intent = new Intent(CalendarActivity.this, ConfirmationActivity.class);
-                    intent.putExtra("DateTime", date);
-                    startActivity(intent, ActivityOptions
-                            .makeSceneTransitionAnimation(CalendarActivity.this).toBundle());
-                } else {
-                    Intent newActivity = new Intent(CalendarActivity.this, ConfirmationActivity.class);
-                    newActivity.putExtra("DateTime", date);
-                    startActivity(newActivity);
-                }
-
-
-
-            }
-        });
     }
 
-    /**
-     * Save current states of the Caldroid here
-     */
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
+    public CaldroidListener createCaldroidListener(){
+        CaldroidListener listener = new CaldroidListener() {
 
-        if (caldroidFragment != null) {
-            caldroidFragment.saveStatesToKey(outState, "CALDROID_SAVED_STATE");
-        }
+        @Override
+        public void onSelectDate(Date date, View view) {
+            if(selectedDate != null){
+                if(selectedDate.getDate() == today.getDate())
+                    caldroidFragment.setBackgroundResourceForDate(com.caldroid.R.drawable.red_border,selectedDate);
+                else
+                    caldroidFragment.setBackgroundResourceForDate(R.color.white, selectedDate);
+            }
+            caldroidFragment.setBackgroundResourceForDate(R.color.blue, date);
+            caldroidFragment.refreshView();
+            selectedDate = date;
+            }
+        };
+        return listener;
     }
 
     public void setTime(View view) {
         int hour = timePicker.getCurrentHour();
         int min = timePicker.getCurrentMinute();
-        showTime(hour, min);
+        setDate(hour, min);
     }
 
-    public void showTime(int hour, int min) {
+    public void setDate(int hour, int min) {
         String resultTime = (new StringBuilder().append(hour).append(":").append(min).append(":0")).toString();
-
         date = formatter.format(selectedDate)+","+resultTime;
-
-//        Toast.makeText(getApplicationContext(),date,Toast.LENGTH_SHORT).show();
-        Log.v("calendarDate",date);
     }
 
 }
