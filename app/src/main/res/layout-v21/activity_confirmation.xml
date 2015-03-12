@@ -2,67 +2,74 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight=".1">
+    <TextView
+        android:layout_margin="5dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="2dp"
+        android:padding="10dp"
+        android:ems="10"
+        android:id="@+id/personal_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="เลขบัตรประจำตัวประชาชน"
+        android:layout_gravity="center"
+         />
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+    <EditText
+        android:maxLength="13"
+        android:background="@color/lb0"
+        android:padding="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:ems="10"
+        android:textColor="@color/lb900"
+        android:id="@+id/personal_id_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:layout_gravity="center"
+       />
 
-            <TextView
-                android:id="@+id/personal_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="เลขบัตรประชาชน : "
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+    <TextView
+        android:padding="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="2dp"
+        android:ems="10"
+        android:id="@+id/telephone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="เบอร์โทรศัพท์มือถือ"
+        android:layout_gravity="center" />
 
-            <EditText
-                android:id="@+id/personal_id_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:layout_weight="1" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight=".1"
-            android:layout_marginTop="5dp">
-
-            <TextView
-                android:id="@+id/telephone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="เบอร์โทรศัพท์ : "
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <EditText
-                android:id="@+id/telephone_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:layout_weight="1" />
-        </LinearLayout>
-    </LinearLayout>
+    <EditText
+        android:maxLength="10"
+        android:background="@color/lb0"
+        android:padding="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:ems="10"
+        android:textColor="@color/lb900"
+        android:id="@+id/telephone_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:inputType="number"
+        />
 
     <Button
+        android:padding="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:id="@+id/confirmBtn"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight=".0125"
-        android:layout_gravity="center|bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
         android:text="ยืนยัน"
-        android:background="@drawable/button_custom"
-        android:textColor="@color/white"
-        android:layout_alignParentBottom="true"/>
+        android:textColor="@color/lb0"
+        android:layout_alignParentBottom="true" />
 
 </LinearLayout>
 

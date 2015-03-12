@@ -8,9 +8,11 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.transition.Explode;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.TimePicker;
 
 import com.kanoon.egov.R;
@@ -29,6 +31,7 @@ public class CalendarActivity extends FragmentActivity {
     private TimePicker timePicker;
     private SimpleDateFormat formatter;
     private String date;
+    private DatePicker datePicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +45,12 @@ public class CalendarActivity extends FragmentActivity {
         today = new Date();
         selectedDate = today;
 
-        createCaldroid(savedInstanceState);
-        createCaldroidListener();
-        caldroidFragment.setCaldroidListener( createCaldroidListener());
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            createNativeCalendar();
+        } else {
+            createCaldroid(savedInstanceState);
+            caldroidFragment.setCaldroidListener( createCaldroidListener());
+        }
 
         timePicker = (TimePicker) findViewById(R.id.timePicker1);
         timePicker.setIs24HourView(true);
@@ -80,6 +85,13 @@ public class CalendarActivity extends FragmentActivity {
                 }
             }
         });
+    }
+
+    private void createNativeCalendar() {
+        datePicker = (DatePicker) findViewById(R.id.l_date_picker);
+        datePicker.setMinDate(Calendar.getInstance().getTimeInMillis());
+
+        Log.v(this.getClass().toString(), "v21.DatePicker: " + datePicker);
     }
 
     /**
@@ -141,12 +153,33 @@ public class CalendarActivity extends FragmentActivity {
     public void setTime(View view) {
         int hour = timePicker.getCurrentHour();
         int min = timePicker.getCurrentMinute();
+
+        // THIS IS SO TERRIBLE!!
+        // Low cohesion
+        // Coupling
+        // Bad Design
+        // Side Effect
+        // Low maintenancability
         setDate(hour, min);
     }
 
     public void setDate(int hour, int min) {
         String resultTime = (new StringBuilder().append(hour).append(":").append(min).append(":0")).toString();
-        date = formatter.format(selectedDate)+","+resultTime;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+            int day = datePicker.getDayOfMonth();
+            int month = datePicker.getMonth();
+            int year =  datePicker.getYear();
+            Calendar cal = Calendar.getInstance();
+            cal.set(year, month, day);
+            date = formatter.format(cal.getTime())+","+resultTime;
+
+
+        } else {
+            date = formatter.format(selectedDate)+","+resultTime;
+
+        }
     }
 
 }

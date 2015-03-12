@@ -43,6 +43,7 @@ public class ConfirmationActivity extends Activity{
         Bundle extras = intent.getExtras();
         if (extras != null) {
             date = extras.getString("DateTime");
+            Log.d(this.getClass().toString(), "date: "+ date);
         }
 
         final EditText personal_id = (EditText) findViewById(R.id.personal_id_edit);
