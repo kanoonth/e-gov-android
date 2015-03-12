@@ -7,6 +7,10 @@
         <item name="android:colorAccent">@color/lb700</item>
         <item name="android:colorButtonNormal">@color/lb500</item>
         <item name="android:colorLongPressedHighlight">@color/lb600</item>
+
+        <!--<item name="android:colorControlNormal">@color/lb600</item>-->
+        <!--<item name="android:textColorHint">@color/lb600</item>-->
+
     </style>
 
 </resources>

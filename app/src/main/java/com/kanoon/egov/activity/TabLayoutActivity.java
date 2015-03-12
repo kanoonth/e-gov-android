@@ -2,6 +2,7 @@ package com.kanoon.egov.activity;
 
 import android.app.TabActivity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Window;
@@ -69,7 +70,7 @@ public class TabLayoutActivity extends TabActivity {
         intent = new Intent(this, LocationActivity.class);
         intent.putExtra("namePlace", namePlace.toArray(new String[0]));
         intent.putExtra("idPlace", idPlace.toArray(new String[0]));
-        spec = tabhost.newTabSpec("location").setIndicator("สถานที่").setContent(intent);
+        spec = tabhost.newTabSpec("location").setIndicator("รายการสถานที่แนะนำ").setContent(intent);
         tab1.setContent(new Intent(this,LocationActivity.class));
 
         tabhost.addTab(spec);
@@ -79,9 +80,14 @@ public class TabLayoutActivity extends TabActivity {
         intent.putExtra("idPlace", idPlace.toArray(new String[0]));
         intent.putExtra("latitude", lat.toArray(new String[0]));
         intent.putExtra("longitude", log.toArray(new String[0]));
-        spec = tabhost.newTabSpec("nearMap").setIndicator("Google Map").setContent(intent);
+        spec = tabhost.newTabSpec("nearMap").setIndicator("ค้นหาจากแผนที่").setContent(intent);
 //        newActivity.putExtra("MyClass", (Serializable) dao);
         tab2.setContent(new Intent(this,NearMapActivity.class));
         tabhost.addTab(spec);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            tabhost.getTabWidget().getChildAt(0).setBackgroundColor(Color.parseColor("#b2b2b2"));
+            tabhost.getTabWidget().getChildAt(1).setBackgroundColor(Color.parseColor("#b2b2b2"));
+        }
     }
 }
