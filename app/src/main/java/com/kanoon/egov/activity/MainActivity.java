@@ -232,7 +232,8 @@ public class MainActivity extends Activity {
                    }
                }
            }
-           adapter.notifyDataSetChanged();
+           if ( data != null )
+            adapter.notifyDataSetChanged();
        }
     }
 

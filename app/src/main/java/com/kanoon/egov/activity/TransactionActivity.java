@@ -46,8 +46,7 @@ public class TransactionActivity extends Activity implements
         groups = new ArrayList<TransactionGroup>();
         createData();
 
-
-
+        setTitle("เลือกบริการ");
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         search = (SearchView) findViewById(R.id.search);
