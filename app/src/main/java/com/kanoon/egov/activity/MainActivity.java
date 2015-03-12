@@ -138,8 +138,8 @@ public class MainActivity extends Activity {
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     getWindow().setExitTransition(new Explode());
-                    Intent intent = new Intent(MainActivity.this, CalendarActivity.class);
-//                    Intent intent = new Intent(MainActivity.this, TransactionActivity.class);
+//                    Intent intent = new Intent(MainActivity.this, CalendarActivity.class);
+                    Intent intent = new Intent(MainActivity.this, TransactionActivity.class);
                     startActivity(intent, ActivityOptions
                           .makeSceneTransitionAnimation(MainActivity.this).toBundle());
                 } else {

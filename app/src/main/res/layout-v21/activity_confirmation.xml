@@ -6,13 +6,15 @@
     >
 
     <TextView
+        android:gravity="center"
         android:layout_margin="5dp"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="2dp"
+        android:layout_marginBottom="0dp"
         android:padding="10dp"
         android:ems="10"
         android:id="@+id/personal_id"
-        android:layout_width="wrap_content"
+        android:layout_width="210dp"
+        android:textAlignment="center"
         android:layout_height="wrap_content"
         android:text="เลขบัตรประจำตัวประชาชน"
         android:layout_gravity="center"
@@ -22,24 +24,26 @@
         android:maxLength="13"
         android:background="@color/lb0"
         android:padding="10dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="0dp"
         android:layout_marginBottom="8dp"
         android:ems="10"
         android:textColor="@color/lb900"
         android:id="@+id/personal_id_edit"
-        android:layout_width="wrap_content"
+        android:layout_width="210dp"
         android:layout_height="wrap_content"
         android:inputType="number"
         android:layout_gravity="center"
        />
 
     <TextView
+        android:gravity="center"
+        android:textAlignment="center"
         android:padding="10dp"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="2dp"
+        android:layout_marginBottom="0dp"
         android:ems="10"
         android:id="@+id/telephone"
-        android:layout_width="wrap_content"
+        android:layout_width="210dp"
         android:layout_height="wrap_content"
         android:text="เบอร์โทรศัพท์มือถือ"
         android:layout_gravity="center" />
@@ -48,12 +52,12 @@
         android:maxLength="10"
         android:background="@color/lb0"
         android:padding="10dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="0dp"
         android:layout_marginBottom="8dp"
         android:ems="10"
         android:textColor="@color/lb900"
         android:id="@+id/telephone_edit"
-        android:layout_width="wrap_content"
+        android:layout_width="210dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:inputType="number"
@@ -61,15 +65,16 @@
 
     <Button
         android:padding="10dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="18dp"
         android:layout_marginBottom="8dp"
         android:id="@+id/confirmBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="110dp"
         android:layout_height="50dp"
         android:layout_gravity="center"
         android:text="ยืนยัน"
         android:textColor="@color/lb0"
         android:layout_alignParentBottom="true" />
+
 
 </LinearLayout>
 

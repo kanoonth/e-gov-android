@@ -4,33 +4,34 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="horizontal"
-        android:layout_weight="0.9">
+        android:id="@+id/scrollView2"
+        android:layout_weight="0.8"
+        android:layout_gravity="center_horizontal" >
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <DatePicker
+                android:id="@+id/l_date_picker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-        <DatePicker
-            android:layout_weight="0.5"
-            android:id="@+id/l_date_picker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TimePicker
-            android:layout_gravity="bottom"
-            android:layout_weight="0.5"
-            android:id="@+id/timePicker1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
+            <TimePicker
+                android:id="@+id/timePicker1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </ScrollView>
 
     <Button
         android:id="@+id/set_reserve_button"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:elevation="1dp"
-        android:layout_weight="0.1"
+        android:layout_weight="0.2"
         android:layout_centerHorizontal="true"
         android:text="จอง"
         android:textColor="@color/lb0"
