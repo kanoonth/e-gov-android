@@ -5,13 +5,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <TextView
+        android:layout_margin="10dp"
+        android:textColor="@color/lb900"
+        android:layout_marginLeft="20dp"
+        android:layout_width="281dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="เอกสารที่ต้องเตรียม"
+        android:id="@+id/textView" />
+
     <ListView
         android:id="@+id/lsDetail"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_weight=".7">
+        android:layout_weight="0.56">
     </ListView>
 
     <Button

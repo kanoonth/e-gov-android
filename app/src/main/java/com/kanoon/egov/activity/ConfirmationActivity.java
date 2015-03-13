@@ -124,6 +124,7 @@ public class ConfirmationActivity extends Activity{
 
 
         final EditText input = new EditText(this);
+        input.setTextColor(getResources().getColor(R.color.lb800));
         input.setInputType(InputType.TYPE_CLASS_NUMBER);
         alert.setView(input);
 
