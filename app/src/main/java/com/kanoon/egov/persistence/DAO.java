@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import com.kanoon.egov.models.Action;
 import com.kanoon.egov.models.Category;
 import com.kanoon.egov.models.Document;
-import com.kanoon.egov.models.Ticket;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -148,24 +147,5 @@ public class DAO {
             }
         }
         return listDocs;
-    }
-
-    public List<Ticket> getTicket(){
-        List<Ticket> tickets = new ArrayList<Ticket>();
-        SQLiteDatabase db = sqliteConnector.getReadableDatabase();
-        Cursor c = db.rawQuery("SELECT * FROM Ticket;",new String[0]);
-        c.moveToFirst();
-        while(true){
-            Ticket ticket = new Ticket();
-            ticket.id = c.getLong(c.getColumnIndexOrThrow("id"));
-            ticket.code = c.getString(c.getColumnIndexOrThrow("code"));
-            tickets.add(ticket);
-            if(c.isLast()){
-                break;
-            }
-            c.moveToNext();
-        }
-
-        return tickets;
     }
 }

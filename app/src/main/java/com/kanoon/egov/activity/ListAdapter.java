@@ -63,18 +63,6 @@ public class ListAdapter extends BaseAdapter{
     }
 
     public void filterData(String query){
-        data.clear();
-        if(query.isEmpty()){
-            data.addAll(temp);
-        }
-        else{
-            query = query.toLowerCase();
-            for(String q : temp){
-                if(q.toLowerCase().contains(query)){
-                    data.add(q);
-                }
-            }
-        }
         notifyDataSetChanged();
     }
 }

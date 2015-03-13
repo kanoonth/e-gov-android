@@ -139,13 +139,11 @@ public class NearMapActivity extends Activity implements OnMarkerClickListener {
             LatLng latLng = new LatLng(latitude, longitude);
             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
             mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title("You are here!").snippet("Consider yourself located").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             //Can't find location service
             //Magic location
             //In some device but still can click button of your location service on map
-            latitude = 13.851095;
-            longitude = 100.567791;
-            LatLng latLng = new LatLng(13.851095, 100.567791);
+            LatLng latLng = new LatLng(13.751155, 100.540215);
             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         }
 
